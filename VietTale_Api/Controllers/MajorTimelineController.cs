@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VietTale_Api.Interfaces;
+using VietTale_Api.Queries;
 using VietTale_Api.Repositories;
 
 namespace VietTale_Api.Controllers
@@ -19,6 +20,12 @@ namespace VietTale_Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _majorTimelineRepository.GetAllAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Paged([FromQuery]MajorTimelineQueryObject queryObject)
+        {
+            return Ok(await _majorTimelineRepository.GetPagedAsync(queryObject));
         }
     }
 }

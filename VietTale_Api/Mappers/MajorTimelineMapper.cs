@@ -10,6 +10,19 @@ namespace VietTale_Api.Mappers
             return new MajorTimelineDto
             {
                 Name = majorTimeline.Name,
+                StartYear = majorTimeline.StartYear,
+                EndYear = majorTimeline.EndYear,
+                Description = majorTimeline.Description,
+                Events = majorTimeline.Events.Select(x => new EventDto
+                {
+                    Description = x.Description,
+                    EventDate = x.EventDate,
+                    Id = x.Id,
+                    MajorTimelineId = x.MajorTimelineId,
+                    Thumbnail = x.Thumbnail,
+                    Title = x.Title,
+                })
+                .ToList()
             };
         }
     }
