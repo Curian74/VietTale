@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VietTale_Api.Database;
+using VietTale_Api.Interfaces;
+using VietTale_Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("CnnString"));
 });
+
+builder.Services.AddScoped<IMajorTimelineRepository, MajorTimelineRepository>();
 
 var MyAllowSpecificOrigins = "react_frontEnd";
 

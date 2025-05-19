@@ -7,6 +7,6 @@ namespace VietTale_Api.Database
     {
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<MajorTimeLine> MajorTimeLines { get; set; }
+        public DbSet<MajorTimeline> MajorTimelines { get; set; }
     }
 }
