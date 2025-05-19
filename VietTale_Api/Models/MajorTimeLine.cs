@@ -1,0 +1,8 @@
+﻿namespace VietTale_Api.Models
+{
+    public class MajorTimeLine
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+}
