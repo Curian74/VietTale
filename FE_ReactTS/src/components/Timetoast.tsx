@@ -16,14 +16,12 @@ const Timetoast = () => {
     const fetchMajorTimeline = async (page: number) => {
         try {
             const data = await MajorTimelineService.getPagedAsync(page + 1, PAGE_SIZE);
-            const item = data.items[0];
+            const item: MajorTimeline = data.items[0];
             setMajorTimeLine(item);
 
-            const yearsTemp = [];
-            for (let year = item.startYear; year <= item.endYear; year++) {
-                yearsTemp.push(year);
-            }
-            setYears(yearsTemp);
+            const yearsTemp = item?.events.map((x) => new Date(x.eventTime).getFullYear()) || [];
+            const uniqueYears = Array.from(new Set(yearsTemp));
+            setYears(uniqueYears);
 
             setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
 

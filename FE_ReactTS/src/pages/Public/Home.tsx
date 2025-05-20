@@ -4,15 +4,15 @@ import Timetoast from '../../components/Timetoast'
 
 const Home = () => {
   return (
-    <div>
+    <main>
       <Header />
 
-      <Timetoast>
-
-      </Timetoast>
+      <div className='flex'>
+        <Timetoast/>
+      </div>
 
       <Footer />
-    </div>
+    </main>
   )
 }
 
