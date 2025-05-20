@@ -20,7 +20,7 @@ const Timetoast = () => {
             setMajorTimeLine(item);
 
             const yearsTemp = item?.events.map((x) => new Date(x.eventTime).getFullYear()) || [];
-            const uniqueYears = Array.from(new Set(yearsTemp));
+            const uniqueYears = Array.from(new Set(yearsTemp)).sort((a, b) => a - b);
             setYears(uniqueYears);
 
             setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
@@ -31,7 +31,6 @@ const Timetoast = () => {
             console.log(err);
         }
     };
-
 
     useEffect(() => {
         fetchMajorTimeline(pageIndex);
