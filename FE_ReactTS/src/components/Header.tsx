@@ -1,4 +1,4 @@
-
+import { Button } from "@/components/ui/button"
 
 const Header = () => {
     return (
@@ -11,9 +11,17 @@ const Header = () => {
                     <a href="#" className="hover:underline">Liên hệ</a>
                 </nav>
 
-                <div className="ml-10 flex gap-x-5">
-                    <button className="bg-amber-400 rounded-lg px-2 py-1">Sign in</button>
-                    <button>Register</button>
+                <div className="ml-10 flex gap-x-3">
+                    <Button
+                        variant="secondary"
+                        className="bg-[#f6f6f7] cursor-pointer hover:bg-[#e9e9e2] text-black">
+                        Sign in
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        className="bg-[#f6f6f7] cursor-pointer hover:bg-[#e9e9e2] text-black">
+                        Register
+                    </Button>
                 </div>
             </div>
         </header>

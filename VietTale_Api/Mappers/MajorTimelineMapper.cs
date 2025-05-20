@@ -16,7 +16,7 @@ namespace VietTale_Api.Mappers
                 Events = majorTimeline.Events.Select(x => new EventDto
                 {
                     Description = x.Description,
-                    EventDate = x.EventDate,
+                    EventTime = x.EventTime,
                     Id = x.Id,
                     MajorTimelineId = x.MajorTimelineId,
                     Thumbnail = x.Thumbnail,

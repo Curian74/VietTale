@@ -7,7 +7,7 @@ namespace VietTale_Api.Models
         public int Id { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public DateOnly EventDate { get; set; }
+        public DateOnly EventTime { get; set; }
         public string? Thumbnail { get; set; }
 
         [ForeignKey(nameof(MajorTimeline))]
