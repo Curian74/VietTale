@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { MajorTimeline } from '../types/MajorTimeline';
 import MajorTimelineService from '../services/MajorTimelineService';
 import CustomCircularLoading from './layouts/CustomCircularLoading';
+import { Button } from './ui/button';
 
 const PAGE_SIZE = 1;
 
@@ -128,20 +129,20 @@ const Timetoast = () => {
 
             {/* Navigation buttons */}
             <div className="flex justify-between mt-6">
-                <button
+                <Button
                     onClick={handlePrev}
                     disabled={pageIndex === 0}
                     className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded hover:bg-blue-600 disabled:opacity-50"
                 >
                     Previous
-                </button>
-                <button
+                </Button>
+                <Button
                     onClick={handleNext}
                     disabled={pageIndex >= totalPages - 1}
                     className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded hover:bg-blue-600 disabled:opacity-50"
                 >
                     Next
-                </button>
+                </Button>
             </div>
         </div>
     );
