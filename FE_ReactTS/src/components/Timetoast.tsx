@@ -25,7 +25,7 @@ const Timetoast = () => {
             setYears(yearsTemp);
 
             setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
-            
+
             setIsLoading(false);
 
         } catch (err) {
@@ -57,11 +57,11 @@ const Timetoast = () => {
     };
 
     if (isLoading) {
-        return <CustomCircularLoading/>
+        return <CustomCircularLoading />
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-[#f3f3f3] shadow rounded-xl border">
+        <div className="max-w-6xl mx-auto p-6 bg-[#f3f3f3] shadow border border-gray-200">
             {/* Header */}
             <div className="mb-4">
                 <h2 className="text-2xl font-bold text-blue-800">{majorTimeLine?.name}</h2>
@@ -75,7 +75,7 @@ const Timetoast = () => {
                 <div className="flex min-w-[800px] space-x-4">
                     {years.map((year) => (
                         <div key={year} className="flex flex-col items-center w-64">
-                            <div className="text-sm text-gray-500 mb-2">{year}</div>
+                            <div className="text-md font-semibold text-gray-500 mb-2">{year}</div>
                             {eventsByYear[year].map((event) => (
                                 <div
                                     key={event.id}
