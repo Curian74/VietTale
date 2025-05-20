@@ -64,45 +64,65 @@ const Timetoast = () => {
         <div className="max-w-6xl mx-auto p-6 bg-[#f3f3f3] shadow border border-gray-200">
             {/* Header */}
             <div className="mb-4">
-                <h2 className="text-2xl font-bold text-blue-800">{majorTimeLine?.name}</h2>
-                <p className="text-gray-600 italic mb-2">
+                <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
+                <p className="text-gray-600 italic mb-2 font-medium">
                     {majorTimeLine?.startYear}  → {majorTimeLine?.endYear}
                 </p>
-                <p className="text-gray-700">{majorTimeLine?.description}</p>
+                <p className="text-gray-700 font-medium">{majorTimeLine?.description}</p>
             </div>
 
             <div className="overflow-x-auto border-t border-gray-300 pt-4">
                 <div className="flex min-w-[800px] space-x-4">
                     {years.map((year) => (
-                        <div key={year} className="flex flex-col items-center w-64">
-                            <div className="text-md font-semibold text-gray-500 mb-2">{year}</div>
-                            {eventsByYear[year].map((event) => (
+                        <div key={year} className="relative cursor-pointer flex flex-col items-center w-64 min-h-[200px]">
+                            {/* Năm */}
+                            <p className="text-md font-semibold text-gray-500 mb-4">{year}</p>
+
+                            <div className="absolute top-12 bottom-0 left-1/2 transform -translate-x-1/2 w-[1px] bg-[#7678e1] z-0" />
+
+                            <div className="relative z-10 mb-4">
+                                <div className="w-3 h-3 rounded-full bg-[#5a00ff] left-1/2 transform -translate-x-1/2 border-2 border-white shadow"
+                                    style={{ position: 'absolute', top: 0 }} />
+                            </div>
+
+                            {/* Các event */}
+                            {eventsByYear[year]?.map((event, index) => (
                                 <div
                                     key={event.id}
-                                    className="bg-white text-left rounded px-2 py-1 mb-2 w-full text-xs shadow-md"
+                                    className="relative flex flex-col items-center z-10 w-full mb-6"
                                 >
-                                    <div className='flex justify-center mb-2'>
-                                        {event.thumbnail && (
-                                            <img
-                                                src={event.thumbnail}
-                                                alt={event.title}
-                                                className="w-12 h-12 object-cover rounded"
-                                            />
-                                        )}
-                                    </div>
+                                    {/* Vạch nối nếu là event đầu tiên */}
+                                    {index === 0 && (
+                                        <div className="h-3 w-[1px] bg-[#5a00ff] mb-1 z-0"></div>
+                                    )}
 
-                                    <p className="font-semibold text-[#5a00ff]">
-                                        {new Date(event.eventTime).toLocaleDateString('vi-VN', {
-                                            day: 'numeric',
-                                            month: 'short',
-                                            year: 'numeric',
-                                        })}
-                                    </p>
-                                    <p className="mt-1 font-medium">{event.title}</p>
+                                    {/* Box event */}
+                                    <div className="bg-white text-left rounded px-2 py-1 min-w-30 text-xs shadow-md">
+                                        <div className='flex justify-center mb-2'>
+                                            {event.thumbnail && (
+                                                <img
+                                                    src={event.thumbnail}
+                                                    alt={event.title}
+                                                    className="w-10 h-10 object-cover rounded"
+                                                />
+                                            )}
+                                        </div>
+
+                                        <p className="font-semibold text-[#5a00ff]">
+                                            {new Date(event.eventTime).toLocaleDateString('vi-VN', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            })}
+                                        </p>
+                                        <p className="mt-1 font-medium">{event.title}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     ))}
+
+
                 </div>
             </div>
 
