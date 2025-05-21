@@ -3,8 +3,10 @@ import type { MajorTimeline } from '../types/MajorTimeline';
 import MajorTimelineService from '../services/MajorTimelineService';
 import CustomCircularLoading from './layouts/CustomCircularLoading';
 import { Button } from './ui/button';
+import { Tooltip } from '@mui/material';
 
 const PAGE_SIZE = 1;
+const TITLE_MAX_LENGTH = 35;
 
 const Timetoast = () => {
     const [pageIndex, setPageIndex] = useState(0);
@@ -73,54 +75,62 @@ const Timetoast = () => {
                 <div className="flex min-w-[800px] space-x-4">
                     {years.map((year) => (
                         <div key={year} className="relative cursor-pointer flex flex-col items-center w-64 min-h-[200px]">
-                            {/* Năm */}
-                            <p className="text-md font-semibold text-gray-500 mb-4">{year}</p>
-
-                            <div className="absolute top-12 bottom-0 left-1/2 transform -translate-x-1/2 w-[1px] bg-[#7678e1] z-0" />
-
-                            <div className="relative z-10 mb-4">
-                                <div className="w-3 h-3 rounded-full bg-[#5a00ff] left-1/2 transform -translate-x-1/2 border-2 border-white shadow"
-                                    style={{ position: 'absolute', top: 0 }} />
-                            </div>
+                            {/* Đường timeline dọc - kéo dài từ trên xuống năm */}
+                            <div className="absolute top-0 bottom-5 left-1/2 transform -translate-x-1/2 w-[1px] bg-[#7678e1] z-0" />
 
                             {/* Các event */}
-                            {eventsByYear[year]?.map((event, index) => (
+                            {eventsByYear[year]?.map((event) => (
                                 <div
                                     key={event.id}
                                     className="relative flex flex-col items-center z-10 w-full mb-6"
                                 >
-                                    {/* Vạch nối nếu là event đầu tiên */}
-                                    {index === 0 && (
-                                        <div className="h-3 w-[1px] bg-[#5a00ff] mb-1 z-0"></div>
-                                    )}
-
                                     {/* Box event */}
-                                    <div className="bg-white text-left rounded px-2 py-1 min-w-30 text-xs shadow-md">
-                                        <div className='flex justify-center mb-2'>
-                                            {event.thumbnail && (
-                                                <img
-                                                    src={event.thumbnail}
-                                                    alt={event.title}
-                                                    className="w-10 h-10 object-cover rounded"
-                                                />
-                                            )}
-                                        </div>
+                                    <Tooltip title={event.title}>
+                                        <div className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md">
+                                            <div className="flex items-center ml-1 h-full">
+                                                {event.thumbnail && (
+                                                    <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                                                        <img
+                                                            src={event.thumbnail}
+                                                            alt={event.title}
+                                                            className="w-10 h-10 object-cover rounded-sm"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
 
-                                        <p className="font-semibold text-[#5a00ff]">
-                                            {new Date(event.eventTime).toLocaleDateString('vi-VN', {
-                                                day: 'numeric',
-                                                month: 'short',
-                                                year: 'numeric',
-                                            })}
-                                        </p>
-                                        <p className="mt-1 font-medium">{event.title}</p>
-                                    </div>
+                                            <div className="ml-2 mr-1 flex flex-col justify-center">
+                                                <p className="font-semibold text-[#5a00ff]">
+                                                    {new Date(event.eventTime).toLocaleDateString('vi-VN', {
+                                                        day: 'numeric',
+                                                        month: 'short',
+                                                        year: 'numeric',
+                                                    })}
+                                                </p>
+                                                <p
+                                                    className="mt-0 font-medium text-[11px]"
+                                                    title={event.title}
+                                                >
+                                                    {event.title!.length > TITLE_MAX_LENGTH
+                                                        ? event.title!.substring(0, TITLE_MAX_LENGTH) + '...'
+                                                        : event.title}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Tooltip>
                                 </div>
                             ))}
+
+                            {/* Chấm tròn và năm */}
+                            <div className="relative z-10 mt-auto flex flex-col items-center">
+                                {/* Chấm tròn trên năm */}
+                                <div className="w-3 h-3 rounded-full bg-[#5a00ff] border-2 border-white shadow"></div>
+
+                                {/* Năm */}
+                                <p className="text-md font-semibold text-gray-500">{year}</p>
+                            </div>
                         </div>
                     ))}
-
-
                 </div>
             </div>
 
