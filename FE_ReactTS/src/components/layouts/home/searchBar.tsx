@@ -2,14 +2,14 @@
 const SearchBar = () => {
 
     return (
-        <section className="bg-[#f3f3f3] w-50 h-fit pb-8 border">
+        <main className="bg-[#f3f3f3] ml-3 w-56 h-fit pb-60 border">
             {/* Title */}
             <div className="bg-[#193cb8] p-2 font-medium text-start">
                 <p className="text-white">Tìm kiếm</p>
             </div>
 
             {/* Content */}
-            <div className="flex flex-col px-4">
+            <div className="flex flex-col px-2">
                 <div>
                     <p className="font-medium my-2 text-sm">Chủ đề</p>
                     <select className="bg-white py-1 w-full border cursor-pointer">
@@ -31,7 +31,7 @@ const SearchBar = () => {
                 </div>
 
             </div>
-        </section>
+        </main>
     )
 }
 

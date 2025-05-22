@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import type { MajorTimeline } from '../types/MajorTimeline';
 import MajorTimelineService from '../services/MajorTimelineService';
-import CustomCircularLoading from './layouts/CustomCircularLoading';
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
 
-const Timetoast = () => {
+interface TimetoastProps {
+    onLoadComplete: () => void;
+}
+
+const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     const [pageIndex, setPageIndex] = useState(0);
     const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
     const [years, setYears] = useState<number[]>([]);
     const [totalPages, setTotalPages] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
 
     const fetchMajorTimeline = async (page: number) => {
         try {
@@ -27,7 +29,7 @@ const Timetoast = () => {
 
             setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
 
-            setIsLoading(false);
+            onLoadComplete();
 
         } catch (err) {
             console.log(err);
@@ -56,12 +58,10 @@ const Timetoast = () => {
         if (pageIndex < totalPages - 1) setPageIndex((prev) => prev + 1);
     };
 
-    if (isLoading) {
-        return <CustomCircularLoading />
-    }
+    if (!majorTimeLine) return null;
 
     return (
-        <div className="max-w-6xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <section className="max-w-6xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
@@ -153,7 +153,7 @@ const Timetoast = () => {
                     Next
                 </Button>
             </div>
-        </div>
+        </section>
     );
 };
 
