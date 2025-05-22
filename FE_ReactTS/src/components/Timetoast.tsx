@@ -61,7 +61,7 @@ const Timetoast = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <div className="max-w-6xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
@@ -104,7 +104,7 @@ const Timetoast = () => {
                                                 )}
                                             </div>
 
-                                            <div className="ml-1 mr-1 flex flex-col justify-center">
+                                            <div className="ml-2 mr-1 flex flex-col justify-center">
                                                 <p className="font-semibold text-[#5a00ff]">
                                                     {new Date(event.eventTime).toLocaleDateString('vi-VN', {
                                                         day: 'numeric',

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router";
-import { QADropdown } from "./layouts/QADropdown";
+import { QADropdown } from "./layouts/home/QADropdown";
 
 const Header = () => {
     return (
