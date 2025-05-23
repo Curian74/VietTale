@@ -15,6 +15,7 @@ const Home = () => {
 
       <div className="container mx-auto">
 
+        {isLoading && <CustomCircularLoading />}
         <section className='flex gap-10'>
           <SearchBar />
           <Timetoast onLoadComplete={() => {
@@ -22,7 +23,6 @@ const Home = () => {
           }} />
         </section>
 
-        {isLoading && <CustomCircularLoading />}
 
         <section className='my-10'>
           <h1 className='text-center text-3xl font-medium mb-8'>NHÂN VẬT LỊCH SỬ</h1>

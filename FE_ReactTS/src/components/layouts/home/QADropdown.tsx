@@ -20,7 +20,7 @@ export function QADropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuGroup>
+        <DropdownMenuGroup className="font-medium">
           <DropdownMenuItem className="cursor-pointer">
             Lịch sử 12
           </DropdownMenuItem>
