@@ -1,7 +1,7 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Timetoast from '../../components/Timetoast'
-import SearchBar from '@/components/layouts/home/searchBar'
+import SearchBar from '@/components/home/searchBar'
 import { useState } from 'react'
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
 
