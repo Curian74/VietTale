@@ -4,7 +4,7 @@ import Timetoast from '../../components/Timetoast'
 import SearchBar from '@/components/home/searchBar'
 import { useState } from 'react'
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
-import HistoryFigure from '@/components/home/historyFigure'
+import HistoryFigure from '@/components/historicalFigure/historyFigure'
 
 const Home = () => {
 
