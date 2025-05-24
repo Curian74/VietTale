@@ -1,12 +1,10 @@
 import { Route, Routes } from 'react-router'
-import Home from '../pages/Public/Home'
-import Test from '../pages/Public/Test'
+import Home from '../pages/public/Home'
 
 const Index = () => {
   return (
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/test' element={<Test/>}/>
     </Routes>
   )
 }

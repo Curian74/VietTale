@@ -4,7 +4,7 @@ import Timetoast from '../../components/Timetoast'
 import SearchBar from '@/components/home/searchBar'
 import { useState } from 'react'
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
-import HistoryFigure from '@/components/home/historyFigure'
+import HistoryFigure from '@/components/historicalFigure/historyFigure'
 
 const Home = () => {
 
@@ -17,7 +17,7 @@ const Home = () => {
       <div className="container mx-auto">
 
         {isLoading && <CustomCircularLoading />}
-        <section className='flex gap-10'>
+        <section className='flex flex-col md:flex-row gap-2 md:gap-10 ml-2'>
           <SearchBar />
           <Timetoast onLoadComplete={() => {
             setIsLoading(false);

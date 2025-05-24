@@ -5,7 +5,6 @@ using VietTale_Api.Interfaces;
 using VietTale_Api.Mappers;
 using VietTale_Api.Queries;
 using VietTale_Api.Utils;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace VietTale_Api.Repositories
 {
