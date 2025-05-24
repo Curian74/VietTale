@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router'
-import Home from '../pages/Public/Home'
+import Home from '../pages/public/Home'
 
 const Index = () => {
   return (

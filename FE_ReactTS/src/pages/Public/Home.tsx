@@ -17,7 +17,7 @@ const Home = () => {
       <div className="container mx-auto">
 
         {isLoading && <CustomCircularLoading />}
-        <section className='flex gap-10'>
+        <section className='flex flex-col md:flex-row gap-2 md:gap-10 ml-2'>
           <SearchBar />
           <Timetoast onLoadComplete={() => {
             setIsLoading(false);

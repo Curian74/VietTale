@@ -13,10 +13,10 @@ const HistoricalFigureDetail = ({ selectedFigure }: HistoricalFigureDetailProps)
                bg-cover bg-center text-black"
       >
         {/* Overlay trắng mờ */}
-        <div className="absolute inset-0 bg-[#efefef]/85 z-0"></div>
+        <div className="absolute inset-0 bg-[#efefef]/88 z-0"></div>
 
         {/* Content */}
-        <div className="relative z-10 space-y-4">
+        <div className="relative z-10 space-y-3">
           <h2 className="text-2xl font-semibold">{selectedFigure.name}</h2>
           <p className="text-sm">{selectedFigure.description}</p>
         </div>

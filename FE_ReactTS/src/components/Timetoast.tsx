@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
-import type { MajorTimeline } from '@/types/MajorTimeline';
-import MajorTimelineService from '@/services/MajorTimelineService';
+import MajorTimelineService from '@/services/majorTimelineService';
+import type { MajorTimeline } from '@/types/majorTimeline';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
@@ -61,7 +61,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     if (!majorTimeLine) return null;
 
     return (
-        <section className="max-w-6xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>

@@ -19,9 +19,9 @@ const HistoryFigure = () => {
     return (
         <main>
             <h1 className='text-center text-3xl font-medium mb-8'>NHÂN VẬT LỊCH SỬ</h1>
-            <div className='flex flex-col md:flex-row gap-6 md:gap-10 ml-3 md:ml-5'>
+            <div className='flex flex-col md:flex-row gap-6 md:gap-10 ml-3 md:ml-8'>
                 {/* Left Side Content */}
-                <div className="flex flex-col">
+                <div className="flex flex-col w-70">
                     <HistoryFigureSearch onResults={handleSearchResults} />
                     <HistoricalFigureList
                         selectedFigure={selectedFigure}

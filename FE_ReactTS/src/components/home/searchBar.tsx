@@ -2,7 +2,7 @@
 const SearchBar = () => {
 
     return (
-        <aside className="bg-[#f3f3f3] ml-3 w-56 h-fit pb-60 border">
+        <aside className="bg-[#f3f3f3] ml-1 w-56 h-fit pb-60 border">
             {/* Title */}
             <div className="bg-[#193cb8] p-2 font-medium text-start">
                 <p className="text-white">Tìm kiếm</p>
