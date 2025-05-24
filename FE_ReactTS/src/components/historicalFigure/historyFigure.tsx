@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HistoryFigureSearch from "./historyFigureSearch";
 import type { HistoricalFigure } from "@/types/historicalFigure";
 import HistoricalFigureList from "./historicalFigureList";
@@ -8,13 +8,13 @@ const HistoryFigure = () => {
     const [figures, setFigures] = useState<HistoricalFigure[]>([]);
     const [selectedFigure, setSelectedFigure] = useState<HistoricalFigure | null>(null);
 
-    useEffect(() => {
-        if (figures.length > 0) {
-            setSelectedFigure(figures[0]);
-        } else {
-            setSelectedFigure(null);
+    const handleSearchResults = (results: HistoricalFigure[]) => {
+        setFigures(results);
+
+        if (!selectedFigure && results.length > 0) {
+            setSelectedFigure(results[0]);
         }
-    }, [figures]);
+    };
 
     return (
         <main>
@@ -22,7 +22,7 @@ const HistoryFigure = () => {
             <div className='flex flex-col md:flex-row gap-6 md:gap-10 ml-3 md:ml-5'>
                 {/* Left Side Content */}
                 <div className="flex flex-col">
-                    <HistoryFigureSearch onResults={setFigures} />
+                    <HistoryFigureSearch onResults={handleSearchResults} />
                     <HistoricalFigureList
                         selectedFigure={selectedFigure}
                         figures={figures}
