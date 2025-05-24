@@ -4,6 +4,7 @@ import Timetoast from '../../components/Timetoast'
 import SearchBar from '@/components/home/searchBar'
 import { useState } from 'react'
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
+import HistoryFigure from '@/components/home/historyFigure'
 
 const Home = () => {
 
@@ -23,12 +24,8 @@ const Home = () => {
           }} />
         </section>
 
-
         <section className='my-10'>
-          <h1 className='text-center text-3xl font-medium mb-8'>NHÂN VẬT LỊCH SỬ</h1>
-          <div className='flex items-center gap-10'>
-
-          </div>
+          <HistoryFigure />
         </section>
 
       </div>
