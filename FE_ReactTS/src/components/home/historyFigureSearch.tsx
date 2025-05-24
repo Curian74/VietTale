@@ -58,7 +58,6 @@ const HistoryFigureSearch = () => {
                         </div>
                     ))}
                 </div>
-
             </div>
         </section>
 

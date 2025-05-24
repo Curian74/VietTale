@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import type { MajorTimeline } from '../types/MajorTimeline';
 import MajorTimelineService from '../services/MajorTimelineService';
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
+import type { MajorTimeline } from '@/types/MajorTimeline';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
