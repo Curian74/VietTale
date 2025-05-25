@@ -61,7 +61,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     if (!majorTimeLine) return null;
 
     return (
-        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
@@ -72,9 +72,9 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
             </div>
 
             <div className="overflow-x-auto border-t border-gray-300 pt-4">
-                <div className="flex min-w-[800px] space-x-4">
+                <div className="flex min-w-[800px] space-x-4 mb-8">
                     {years.map((year) => (
-                        <div key={year} className="relative cursor-pointer flex flex-col items-center w-64 min-h-[200px]">
+                        <div key={year} className="relative flex flex-col items-center w-64 min-h-[200px]">
 
                             {/* Vertical Timeline */}
                             <div
@@ -87,7 +87,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                             {eventsByYear[year]?.map((event) => (
                                 <div
                                     key={event.id}
-                                    className="relative flex flex-col items-center z-10 w-full mb-6"
+                                    className="relative cursor-pointer flex flex-col items-center z-10 w-full mb-6"
                                 >
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
