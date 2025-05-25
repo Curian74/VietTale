@@ -40,14 +40,14 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
         fetchMajorTimeline(pageIndex);
     }, [pageIndex]);
 
+    // Group and sort events by year
     const eventsByYear: Record<number, MajorTimeline['events']> = {};
     if (majorTimeLine) {
         for (const year of years) {
-            eventsByYear[year] = majorTimeLine.events.filter(
-                (e) => new Date(e.eventTime).getFullYear() === year
-            );
+            eventsByYear[year] = majorTimeLine.events
+                .filter((e) => new Date(e.eventTime).getFullYear() === year)
+                .sort((a, b) => new Date(a.eventTime).getTime() - new Date(b.eventTime).getTime());
         }
-        console.log(eventsByYear)
     }
 
     const handlePrev = () => {
@@ -91,7 +91,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                                 >
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
-                                        <div className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md">
+                                        <div className="bg-white flex text-left rounded py-1 min-w-42 max-w-42 h-[55px] text-xs shadow-md">
                                             <div className="flex items-center h-full">
                                                 {event.thumbnail && (
                                                     <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center">
