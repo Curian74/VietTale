@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 
 builder.Services.AddScoped<IMajorTimelineRepository, MajorTimelineRepository>();
 builder.Services.AddScoped<IHistoricalFigureRepository, HistoricalFigureRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 var MyAllowSpecificOrigins = "react_frontEnd";
 
