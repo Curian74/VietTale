@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
 import MajorTimelineService from '@/services/majorTimelineService';
-import type { MajorTimeline } from '@/types/majorTimeline';
-import { useNavigate } from 'react-router-dom';
+import type { MajorTimeline } from '@/types/MajorTimeline';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
@@ -17,7 +16,6 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
     const [years, setYears] = useState<number[]>([]);
     const [totalPages, setTotalPages] = useState(0);
-    const navigate = useNavigate();
 
     const fetchMajorTimeline = async (page: number) => {
         try {
@@ -42,14 +40,14 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
         fetchMajorTimeline(pageIndex);
     }, [pageIndex]);
 
+    // Group and sort events by year
     const eventsByYear: Record<number, MajorTimeline['events']> = {};
     if (majorTimeLine) {
         for (const year of years) {
-            eventsByYear[year] = majorTimeLine.events.filter(
-                (e) => new Date(e.eventTime).getFullYear() === year
-            );
+            eventsByYear[year] = majorTimeLine.events
+                .filter((e) => new Date(e.eventTime).getFullYear() === year)
+                .sort((a, b) => new Date(a.eventTime).getTime() - new Date(b.eventTime).getTime());
         }
-        console.log(eventsByYear)
     }
 
     const handlePrev = () => {
@@ -67,7 +65,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     if (!majorTimeLine) return null;
 
     return (
-        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
@@ -78,9 +76,9 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
             </div>
 
             <div className="overflow-x-auto border-t border-gray-300 pt-4">
-                <div className="flex min-w-[800px] space-x-4">
+                <div className="flex min-w-[800px] space-x-4 mb-8">
                     {years.map((year) => (
-                        <div key={year} className="relative cursor-pointer flex flex-col items-center w-64 min-h-[200px]">
+                        <div key={year} className="relative flex flex-col items-center w-64 min-h-[200px]">
 
                             {/* Vertical Timeline */}
                             <div
@@ -93,12 +91,12 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                             {eventsByYear[year]?.map((event) => (
                                 <div
                                     key={event.id}
-                                    className="relative flex flex-col items-center z-10 w-full mb-6"
+                                    className="relative cursor-pointer flex flex-col items-center z-10 w-full mb-6"
                                 >
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
                                         <div
-                                            className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md cursor-pointer"
+                                            className="bg-white flex text-left rounded py-1 min-w-42 max-w-42 h-[55px] text-xs shadow-md cursor-pointer"
                                             onClick={() => handleEventClick(event.id)}
                                         >
                                             <div className="flex items-center h-full">

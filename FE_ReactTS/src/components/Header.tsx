@@ -4,11 +4,11 @@ import { QADropdown } from "./home/QADropdown";
 
 const Header = () => {
     return (
-        <header className="bg-blue-800 text-white shadow mb-10">
+        <header className="bg-blue-800 text-white shadow mb-10 sticky top-0 z-100">
             <div className="max-w-7xl mx-auto py-4 flex items-center justify-between">
-                <h1 className="text-2xl font-bold">VietTale</h1>
+                <Link to='/' className="text-2xl font-bold">VietTale</Link>
                 <nav className="space-x-6 text-white font-medium">
-                    <Link to="#" className="hover:border-b-2 hover:border-white pb-1 transition">Trang chủ</Link>
+                    <Link to='/' className="hover:border-b-2 hover:border-white pb-1 transition">Trang chủ</Link>
                     <Link to="#" className="hover:border-b-2 hover:border-white pb-1 transition">Giới thiệu</Link>
                     <Link to="#" className="hover:border-b-2 hover:border-white pb-1 transition">Sách</Link>
                     <Link to="#" className="hover:border-b-2 hover:border-white pb-1 transition">Video</Link>
