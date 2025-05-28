@@ -1,3 +1,4 @@
+import type { Event } from "./event";
 
 export interface MajorTimeline {
     id: number;

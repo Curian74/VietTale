@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
 import MajorTimelineService from '@/services/majorTimelineService';
-import type { MajorTimeline } from '@/types/majorTimeline';
-import { useNavigate } from 'react-router-dom';
+import type { MajorTimeline } from '@/types/MajorTimeline';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
@@ -17,7 +16,6 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
     const [years, setYears] = useState<number[]>([]);
     const [totalPages, setTotalPages] = useState(0);
-    const navigate = useNavigate();
 
     const fetchMajorTimeline = async (page: number) => {
         try {
