@@ -10,6 +10,8 @@ namespace VietTale_Api.Dtos
         public string? Description { get; set; }
         public DateOnly EventTime { get; set; }
         public string? Thumbnail { get; set; }
+        public ICollection<EventTagDto>? EventTags { get; set; }
+        public ICollection<EventImagesDto>? EventsImages { get; set; }
 
         public int MajorTimelineId { get; set; }
     }
