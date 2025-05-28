@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
 import MajorTimelineService from '@/services/majorTimelineService';
 import type { MajorTimeline } from '@/types/majorTimeline';
+import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
@@ -16,6 +17,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
     const [years, setYears] = useState<number[]>([]);
     const [totalPages, setTotalPages] = useState(0);
+    const navigate = useNavigate();
 
     const fetchMajorTimeline = async (page: number) => {
         try {
@@ -58,6 +60,10 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
         if (pageIndex < totalPages - 1) setPageIndex((prev) => prev + 1);
     };
 
+    const handleEventClick = (eventId: number) => {
+        window.open(`/event/${eventId}`, '_blank');
+    };
+
     if (!majorTimeLine) return null;
 
     return (
@@ -91,7 +97,10 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                                 >
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
-                                        <div className="bg-white flex text-left rounded py-1 min-w-42 max-w-42 h-[55px] text-xs shadow-md">
+                                        <div
+                                            className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md cursor-pointer"
+                                            onClick={() => handleEventClick(event.id)}
+                                        >
                                             <div className="flex items-center h-full">
                                                 {event.thumbnail && (
                                                     <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center">

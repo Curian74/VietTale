@@ -15,6 +15,6 @@ namespace VietTale_Api.Models
         public MajorTimeline? MajorTimeline { get; set; }
 
         public ICollection<EventTag>? EventTags { get; set; }
-
+        public ICollection<EventImages>? EventsImages { get; set; }
     }
 }

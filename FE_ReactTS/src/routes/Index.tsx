@@ -1,14 +1,15 @@
-import { Route, Routes } from 'react-router'
-import Home from '../pages/public/Home'
-import CreateHistoricalFigure from '@/pages/public/createHistoricalFigure'
+import {Route, Routes} from 'react-router'
+import Home from '@/pages/Public/Home';
+import EventDetail from '@/pages/Public/EventDetail';
 
 const Index = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/create-figure' element={<CreateHistoricalFigure/>}/>
-    </Routes>
-  )
+    return (
+        <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path="/event/:id" element={<EventDetail/>}/>
+        </Routes>
+    )
 }
 
 export default Index
+
