@@ -96,7 +96,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
                                         <div
-                                            className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md cursor-pointer"
+                                            className="bg-white flex text-left rounded py-1 min-w-42 max-w-42 h-[55px] text-xs shadow-md cursor-pointer"
                                             onClick={() => handleEventClick(event.id)}
                                         >
                                             <div className="flex items-center h-full">

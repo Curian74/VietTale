@@ -1,13 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Event } from '@/types/event';
+import type { Event } from '../../types/Event';
 import eventService from '@/services/eventService';
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
+import 'swiper/swiper-bundle.css';
 
 interface EventContentProps {
     id: string;
@@ -106,22 +104,20 @@ const EventContent = ({ id, onLoadComplete }: EventContentProps) => {
                 <nav className="flex space-x-8">
                     <button
                         onClick={() => handleTabChange('tags')}
-                        className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                            activeTab === 'tags'
+                        className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'tags'
                                 ? 'border-blue-500 text-blue-600'
                                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                        }`}
+                            }`}
                     >
                         Từ khoá
                     </button>
                     {event.eventsImages && event.eventsImages.length > 0 && (
                         <button
                             onClick={() => handleTabChange('images')}
-                            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                                activeTab === 'images'
+                            className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'images'
                                     ? 'border-blue-500 text-blue-600'
                                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                            }`}
+                                }`}
                         >
                             Hình ảnh
                         </button>
