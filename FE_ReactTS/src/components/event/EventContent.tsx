@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Event } from '../../types/Event';
+import type { Event } from '../../types//Event';
 import eventService from '@/services/eventService';
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading';
 import { Swiper, SwiperSlide } from 'swiper/react';

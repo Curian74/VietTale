@@ -1,5 +1,25 @@
+import MajorTimelineService from "@/services/majorTimelineService";
+import type { MajorTimeline } from "../../types/majorTimeline"
+import { useEffect, useState } from "react"
 
 const SearchBar = () => {
+
+    const [majorTimelines, setMajorTimelines] = useState<MajorTimeline[]>([]);
+
+    const fetchMajorTimelines = async () => {
+        try {
+            const data = await MajorTimelineService.getAllAsync();
+            setMajorTimelines(data);
+        }
+
+        catch (err) {
+
+        }
+    }
+
+    useEffect(() => {
+        fetchMajorTimelines();
+    }, [])
 
     return (
         <aside className="bg-[#f3f3f3] ml-1 w-56 h-fit pb-60 border">
@@ -14,6 +34,9 @@ const SearchBar = () => {
                     <p className="font-medium my-2 text-sm">Chủ đề</p>
                     <select className="bg-white py-1 w-full border cursor-pointer">
                         <option value={''}>Tìm kiếm chủ đề</option>
+                        {majorTimelines.map((m) => (
+                            <option key={m.id} value={m.id}>{m.name}</option>
+                        ))}
                     </select>
                 </div>
 

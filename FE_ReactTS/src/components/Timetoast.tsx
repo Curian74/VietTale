@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
 import MajorTimelineService from '@/services/majorTimelineService';
-import type { MajorTimeline } from '@/types/MajorTimeline';
+import type { MajorTimeline } from '../types/majorTimeline';
 
 const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;

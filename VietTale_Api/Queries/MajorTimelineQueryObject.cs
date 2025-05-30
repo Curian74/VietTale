@@ -2,6 +2,6 @@
 {
     public class MajorTimelineQueryObject : PagedQueryObject
     {
-
+        public int? MajorTimelineId { get; set; }
     }
 }

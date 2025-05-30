@@ -6,8 +6,14 @@ const getPagedAsync = async (pageIndex: number, pageSize: number) => {
     return response.data;
 }
 
+const getAllAsync = async () => {
+    const response = await axios.get(`MajorTimeline/GetAll`);
+    return response.data;
+}
+
 const MajorTimelineService = {
     getPagedAsync,
+    getAllAsync
 }
 
 export default MajorTimelineService;
