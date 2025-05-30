@@ -2,7 +2,13 @@ import MajorTimelineService from "@/services/majorTimelineService";
 import type { MajorTimeline } from "../../types/majorTimeline"
 import { useEffect, useState } from "react"
 
-const SearchBar = () => {
+interface SearchBarProps {
+    onSearchChange: (selectedId: number | string) => void;
+    onClearFilters: () => void;
+    selectedTimelineId?: number | undefined | string;
+}
+
+const SearchBar = ({ onSearchChange, onClearFilters, selectedTimelineId }: SearchBarProps) => {
 
     const [majorTimelines, setMajorTimelines] = useState<MajorTimeline[]>([]);
 
@@ -32,7 +38,11 @@ const SearchBar = () => {
             <div className="flex flex-col px-2">
                 <div>
                     <p className="font-medium my-2 text-sm">Chủ đề</p>
-                    <select className="bg-white py-1 w-full border cursor-pointer">
+                    {/* Goi ham update timeline khi change */}
+                    <select
+                        value={selectedTimelineId ?? ''}
+                        onChange={(e) => onSearchChange(e.target.value)}
+                        className="bg-white py-1 w-full border cursor-pointer">
                         <option value={''}>Tìm kiếm chủ đề</option>
                         {majorTimelines.map((m) => (
                             <option key={m.id} value={m.id}>{m.name}</option>
@@ -48,8 +58,10 @@ const SearchBar = () => {
                 </div>
 
                 <div className="flex justify-center mt-4">
-                    <button className="bg-[#417185] rounded p-2 text-white font-medium cursor-pointer">
-                        Tìm kiếm
+                    <button
+                        onClick={onClearFilters}
+                        className="bg-[#417185] rounded p-2 text-white font-medium cursor-pointer">
+                        Xóa bộ lọc
                     </button>
                 </div>
 

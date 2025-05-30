@@ -1,78 +1,44 @@
-import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { Tooltip } from '@mui/material';
-import MajorTimelineService from '@/services/majorTimelineService';
 import type { MajorTimeline } from '../types/majorTimeline';
 
-const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
 
-interface TimetoastProps {
+interface TimelineProps {
     onLoadComplete: () => void;
+    events: Record<number, MajorTimeline['events']>;
+    years: number[];
+
+    pageIndex: number;
+    totalPages: number;
+    handlePrev: () => void;
+    handleNext: () => void;
+
+    majorTimeline: MajorTimeline | null;
 }
 
-const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
-    const [pageIndex, setPageIndex] = useState(0);
-    const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
-    const [years, setYears] = useState<number[]>([]);
-    const [totalPages, setTotalPages] = useState(0);
-
-    const fetchMajorTimeline = async (page: number) => {
-        try {
-            const data = await MajorTimelineService.getPagedAsync(page + 1, PAGE_SIZE);
-            const item: MajorTimeline = data.items[0];
-            setMajorTimeLine(item);
-
-            const yearsTemp = item?.events.map((x) => new Date(x.eventTime).getFullYear()) || [];
-            const uniqueYears = Array.from(new Set(yearsTemp)).sort((a, b) => a - b);
-            setYears(uniqueYears);
-
-            setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
-
-            onLoadComplete();
-
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        fetchMajorTimeline(pageIndex);
-    }, [pageIndex]);
-
-    // Group and sort events by year
-    const eventsByYear: Record<number, MajorTimeline['events']> = {};
-    if (majorTimeLine) {
-        for (const year of years) {
-            eventsByYear[year] = majorTimeLine.events
-                .filter((e) => new Date(e.eventTime).getFullYear() === year)
-                .sort((a, b) => new Date(a.eventTime).getTime() - new Date(b.eventTime).getTime());
-        }
-    }
-
-    const handlePrev = () => {
-        if (pageIndex > 0) setPageIndex((prev) => prev - 1);
-    };
-
-    const handleNext = () => {
-        if (pageIndex < totalPages - 1) setPageIndex((prev) => prev + 1);
-    };
+const Timeline = ({
+    events,
+    years,
+    handlePrev,
+    handleNext,
+    pageIndex,
+    totalPages,
+    majorTimeline }: TimelineProps) => {
 
     const handleEventClick = (eventId: number) => {
         window.open(`/event/${eventId}`, '_blank');
     };
 
-    if (!majorTimeLine) return null;
-
     return (
         <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
             {/* Header */}
             <div className="mb-4 text-center">
-                <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
+                <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeline?.name}</h2>
                 <p className="text-gray-600 italic mb-2 font-medium">
-                    {majorTimeLine?.startYear} → {majorTimeLine?.endYear}
+                    {majorTimeline?.startYear} → {majorTimeline?.endYear}
                 </p>
-                <p className="text-gray-700 font-medium">{majorTimeLine?.description}</p>
+                <p className="text-gray-700 font-medium">{majorTimeline?.description}</p>
             </div>
 
             <div className="overflow-x-auto border-t border-gray-300 pt-4">
@@ -88,7 +54,7 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                                     backgroundSize: '1px 3px'
                                 }}
                             />
-                            {eventsByYear[year]?.map((event) => (
+                            {events[year]?.map((event) => (
                                 <div
                                     key={event.id}
                                     className="relative cursor-pointer flex flex-col items-center z-10 w-full mb-6"
@@ -164,5 +130,5 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     );
 };
 
-export default Timetoast;
+export default Timeline;
 
