@@ -1,9 +1,5 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import Timetoast from '../../components/timetoast/timeline'
-import SearchBar from '@/components/timetoast/searchBar'
-import { useState } from 'react'
-import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
 import HistoryFigure from '@/components/historicalFigure/historyFigure'
 import TimeToastTest from '@/components/timetoast/timeToast'
 
