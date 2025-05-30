@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router'
 
 
 const Index = () => {
+    //
     return (
         <Routes>
             <Route path='/' element={<Home/>}/>
