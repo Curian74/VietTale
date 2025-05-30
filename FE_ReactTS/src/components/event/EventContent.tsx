@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Event } from '../../types//Event';
 import eventService from '@/services/eventService';
 import CustomCircularLoading from '@/components/layouts/CustomCircularLoading';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/swiper-bundle.css';
+import type { Event } from '@/types/event';
 
 interface EventContentProps {
     id: string;
