@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Timetoast from './components/timeline';
+import Timetoast from './components/timetoast/timeline';
 import './App.css'
 import EventDetail from './pages/public/EventDetail';
 

@@ -1,6 +1,6 @@
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Tooltip } from '@mui/material';
-import type { MajorTimeline } from '../types/majorTimeline';
+import type { MajorTimeline } from '../../types/majorTimeline';
 
 const TITLE_MAX_LENGTH = 35;
 

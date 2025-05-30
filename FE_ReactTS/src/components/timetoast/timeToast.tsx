@@ -1,9 +1,9 @@
 import MajorTimelineService from "@/services/majorTimelineService";
 import type { MajorTimeline } from "@/types/majorTimeline";
 import { useEffect, useState } from "react";
-import SearchBar from "../home/searchBar";
+import SearchBar from "./searchBar";
 import CustomCircularLoading from "../layouts/CustomCircularLoading";
-import Timeline from "../timeline";
+import Timeline from "./timeline";
 
 const PAGE_SIZE = 1;
 
