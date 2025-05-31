@@ -1,8 +1,10 @@
+import EventDetail from '@/pages/public/EventDetail'
+import Home from '@/pages/public/Home'
 import {Route, Routes} from 'react-router'
-import Home from '@/pages/Public/Home';
-import EventDetail from '@/pages/Public/EventDetail';
+
 
 const Index = () => {
+    //
     return (
         <Routes>
             <Route path='/' element={<Home/>}/>

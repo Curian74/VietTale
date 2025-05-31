@@ -9,11 +9,12 @@ namespace VietTale_Api.Mappers
         {
             return new MajorTimelineDto
             {
+                Id = majorTimeline.Id,
                 Name = majorTimeline.Name,
                 StartYear = majorTimeline.StartYear,
                 EndYear = majorTimeline.EndYear,
                 Description = majorTimeline.Description,
-                Events = majorTimeline.Events.Select(x => new EventDto
+                Events = majorTimeline.Events?.Select(x => new EventDto
                 {
                     Description = x.Description,
                     EventTime = x.EventTime,

@@ -17,7 +17,7 @@ const Header = () => {
 
                 </nav>
 
-                <div className="ml-10 flex gap-x-3">
+                <div className="ml-10 flex flex-col md:flex-row gap-3">
                     <Button
                         variant="secondary"
                         className="bg-[#212121] cursor-pointer hover:bg-[#2f2f2f] text-white">
