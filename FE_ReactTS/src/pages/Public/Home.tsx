@@ -2,6 +2,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import HistoryFigure from '@/components/historicalFigure/historyFigure'
 import TimeToast from '@/components/timetoast/timeToast'
+import AboutUs from '@/components/home/aboutUs'
 
 const Home = () => {
 
@@ -11,9 +12,9 @@ const Home = () => {
 
       <div className="container mx-auto">
 
-        <section>
-          <TimeToast />
-        </section>
+        <AboutUs />
+
+        <TimeToast />
 
         <section className='my-10'>
           <HistoryFigure />
