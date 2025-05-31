@@ -1,7 +1,7 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import HistoryFigure from '@/components/historicalFigure/historyFigure'
-import TimeToastTest from '@/components/timetoast/timeToast'
+import TimeToast from '@/components/timetoast/timeToast'
 
 const Home = () => {
 
@@ -12,7 +12,7 @@ const Home = () => {
       <div className="container mx-auto">
 
         <section>
-          <TimeToastTest />
+          <TimeToast />
         </section>
 
         <section className='my-10'>

@@ -1,8 +1,10 @@
 import { Button } from '../ui/button';
 import { Tooltip } from '@mui/material';
 import type { MajorTimeline } from '../../types/majorTimeline';
+import { useEffect, useRef } from 'react';
 
 const TITLE_MAX_LENGTH = 35;
+const SCROLL_SPEED = 1.5;
 
 interface TimelineProps {
     onLoadComplete: () => void;
@@ -26,12 +28,84 @@ const Timeline = ({
     totalPages,
     majorTimeline }: TimelineProps) => {
 
+    // {   
+    //     e1: div,
+    //     e2: div,
+    //     e3: div,
+    // }
+    // const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+    // const scrollToEvent = (eventId: string) => {
+    //     const element = eventRefs.current[eventId];
+    //     console.log(element);
+    //     if (element) {
+    //         element.scrollIntoView({
+    //             behavior: 'smooth',
+    //             inline: 'center',
+    //             block: 'nearest',
+    //         });
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     ví dụ: cuộn đến event có id = "event123"
+    //     scrollToEvent('13');
+    // }, []);
+
     const handleEventClick = (eventId: number) => {
         window.open(`/event/${eventId}`, '_blank');
     };
 
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+
+    // Scroll effect for events
+    useEffect(() => {
+        const slider = scrollRef.current;
+        if (!slider) return;
+
+        const handleMouseDown = (e: MouseEvent) => {
+            isDragging.current = true;
+            startX.current = e.pageX - slider.offsetLeft;
+            scrollLeft.current = slider.scrollLeft;
+            slider.classList.add('cursor-grabbing');
+        };
+
+        const handleMouseLeave = () => {
+            isDragging.current = false;
+            slider.classList.remove('cursor-grabbing');
+        };
+
+        const handleMouseUp = () => {
+            isDragging.current = false;
+            slider.classList.remove('cursor-grabbing');
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX.current) * SCROLL_SPEED;
+            slider.scrollLeft = scrollLeft.current - walk;
+        };
+
+        slider.addEventListener('mousedown', handleMouseDown);
+        slider.addEventListener('mouseleave', handleMouseLeave);
+        slider.addEventListener('mouseup', handleMouseUp);
+        slider.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            slider.removeEventListener('mousedown', handleMouseDown);
+            slider.removeEventListener('mouseleave', handleMouseLeave);
+            slider.removeEventListener('mouseup', handleMouseUp);
+            slider.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
+
     return (
-        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
+        <section className="max-w-7xl p-6 cursor-pointer bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
             {/* Header */}
             <div className="mb-4 text-center">
                 <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeline?.name}</h2>
@@ -41,7 +115,7 @@ const Timeline = ({
                 <p className="text-gray-700 font-medium">{majorTimeline?.description}</p>
             </div>
 
-            <div className="overflow-x-auto border-t border-gray-300 pt-4">
+            <div ref={scrollRef} className="overflow-x-auto border-t border-gray-300 pt-4 select-none">
                 <div className="flex min-w-[800px] space-x-4 mb-8">
                     {years.map((year) => (
                         <div key={year} className="relative flex flex-col items-center w-64 min-h-[200px]">
@@ -57,6 +131,7 @@ const Timeline = ({
                             {events[year]?.map((event) => (
                                 <div
                                     key={event.id}
+                                    // ref={e => { eventRefs.current[event.id] = e }}
                                     className="relative cursor-pointer flex flex-col items-center z-10 w-full mb-6"
                                 >
                                     {/* Box event */}

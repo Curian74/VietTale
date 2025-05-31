@@ -60,7 +60,7 @@ const SearchBar = ({ onSearchChange, onClearFilters, selectedTimelineId }: Searc
                 <div className="flex justify-center mt-4">
                     <button
                         onClick={onClearFilters}
-                        className="bg-[#417185] rounded p-2 text-white font-medium cursor-pointer">
+                        className="bg-[#d84545] hover:bg-[#c82333] rounded p-2 text-white font-medium cursor-pointer">
                         Xóa bộ lọc
                     </button>
                 </div>
