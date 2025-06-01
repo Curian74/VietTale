@@ -28,10 +28,13 @@ const HistoryFigure = () => {
                 {/* Left Side Content */}
                 <div className="flex flex-col w-70">
                     <HistoryFigureSearch onResults={handleSearchResults} />
-                    <HistoricalFigureList
-                        selectedFigure={selectedFigure}
-                        figures={figures}
-                        onSelectFigure={setSelectedFigure} />
+                    {figures.length > 0 && (
+                        <HistoricalFigureList
+                            selectedFigure={selectedFigure}
+                            figures={figures}
+                            onSelectFigure={setSelectedFigure} />
+                    )}
+
                 </div>
 
                 {/* Right Side Content */}
