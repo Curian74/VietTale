@@ -1,86 +1,124 @@
-import { useEffect, useState } from 'react'
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Tooltip } from '@mui/material';
-import MajorTimelineService from '@/services/majorTimelineService';
-import type { MajorTimeline } from '@/types/majorTimeline';
-import { useNavigate } from 'react-router-dom';
+import type { MajorTimeline } from '../../types/majorTimeline';
+import { useEffect, useRef } from 'react';
 
-const PAGE_SIZE = 1;
 const TITLE_MAX_LENGTH = 35;
+const SCROLL_SPEED = 1.5;
 
-interface TimetoastProps {
+interface TimelineProps {
     onLoadComplete: () => void;
+    events: Record<number, MajorTimeline['events']>;
+    years: number[];
+
+    pageIndex: number;
+    totalPages: number;
+    handlePrev: () => void;
+    handleNext: () => void;
+
+    majorTimeline: MajorTimeline | null;
 }
 
-const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
-    const [pageIndex, setPageIndex] = useState(0);
-    const [majorTimeLine, setMajorTimeLine] = useState<MajorTimeline | null>(null);
-    const [years, setYears] = useState<number[]>([]);
-    const [totalPages, setTotalPages] = useState(0);
-    const navigate = useNavigate();
+const Timeline = ({
+    events,
+    years,
+    handlePrev,
+    handleNext,
+    pageIndex,
+    totalPages,
+    majorTimeline }: TimelineProps) => {
 
-    const fetchMajorTimeline = async (page: number) => {
-        try {
-            const data = await MajorTimelineService.getPagedAsync(page + 1, PAGE_SIZE);
-            const item: MajorTimeline = data.items[0];
-            setMajorTimeLine(item);
+    // {   
+    //     e1: div,
+    //     e2: div,
+    //     e3: div,
+    // }
+    // const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-            const yearsTemp = item?.events.map((x) => new Date(x.eventTime).getFullYear()) || [];
-            const uniqueYears = Array.from(new Set(yearsTemp)).sort((a, b) => a - b);
-            setYears(uniqueYears);
+    // const scrollToEvent = (eventId: string) => {
+    //     const element = eventRefs.current[eventId];
+    //     console.log(element);
+    //     if (element) {
+    //         element.scrollIntoView({
+    //             behavior: 'smooth',
+    //             inline: 'center',
+    //             block: 'nearest',
+    //         });
+    //     }
+    // };
 
-            setTotalPages(Math.ceil(data.totalPages / PAGE_SIZE));
-
-            onLoadComplete();
-
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        fetchMajorTimeline(pageIndex);
-    }, [pageIndex]);
-
-    const eventsByYear: Record<number, MajorTimeline['events']> = {};
-    if (majorTimeLine) {
-        for (const year of years) {
-            eventsByYear[year] = majorTimeLine.events.filter(
-                (e) => new Date(e.eventTime).getFullYear() === year
-            );
-        }
-        console.log(eventsByYear)
-    }
-
-    const handlePrev = () => {
-        if (pageIndex > 0) setPageIndex((prev) => prev - 1);
-    };
-
-    const handleNext = () => {
-        if (pageIndex < totalPages - 1) setPageIndex((prev) => prev + 1);
-    };
+    // useEffect(() => {
+    //     ví dụ: cuộn đến event có id = "event123"
+    //     scrollToEvent('13');
+    // }, []);
 
     const handleEventClick = (eventId: number) => {
         window.open(`/event/${eventId}`, '_blank');
     };
 
-    if (!majorTimeLine) return null;
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+
+    // Scroll effect for events
+    useEffect(() => {
+        const slider = scrollRef.current;
+        if (!slider) return;
+
+        const handleMouseDown = (e: MouseEvent) => {
+            isDragging.current = true;
+            startX.current = e.pageX - slider.offsetLeft;
+            scrollLeft.current = slider.scrollLeft;
+            slider.classList.add('cursor-grabbing');
+        };
+
+        const handleMouseLeave = () => {
+            isDragging.current = false;
+            slider.classList.remove('cursor-grabbing');
+        };
+
+        const handleMouseUp = () => {
+            isDragging.current = false;
+            slider.classList.remove('cursor-grabbing');
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX.current) * SCROLL_SPEED;
+            slider.scrollLeft = scrollLeft.current - walk;
+        };
+
+        slider.addEventListener('mousedown', handleMouseDown);
+        slider.addEventListener('mouseleave', handleMouseLeave);
+        slider.addEventListener('mouseup', handleMouseUp);
+        slider.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            slider.removeEventListener('mousedown', handleMouseDown);
+            slider.removeEventListener('mouseleave', handleMouseLeave);
+            slider.removeEventListener('mouseup', handleMouseUp);
+            slider.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
 
     return (
-        <section className="max-w-7xl p-6 bg-[#f3f3f3] shadow border border-gray-200">
+        <section className="max-w-7xl p-6 cursor-pointer bg-[#f3f3f3] shadow border border-gray-200 max-h-[65vh] mb-3 overflow-y-auto">
             {/* Header */}
             <div className="mb-4 text-center">
-                <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeLine?.name}</h2>
+                <h2 className="text-2xl font-bold text-blue-800 mb-2">{majorTimeline?.name}</h2>
                 <p className="text-gray-600 italic mb-2 font-medium">
-                    {majorTimeLine?.startYear} → {majorTimeLine?.endYear}
+                    {majorTimeline?.startYear} → {majorTimeline?.endYear}
                 </p>
-                <p className="text-gray-700 font-medium">{majorTimeLine?.description}</p>
+                <p className="text-gray-700 font-medium">{majorTimeline?.description}</p>
             </div>
 
-            <div className="overflow-x-auto border-t border-gray-300 pt-4">
-                <div className="flex min-w-[800px] space-x-4">
+            <div ref={scrollRef} className="overflow-x-auto border-t border-gray-300 pt-4 select-none">
+                <div className="flex min-w-[800px] space-x-4 mb-8">
                     {years.map((year) => (
-                        <div key={year} className="relative cursor-pointer flex flex-col items-center w-64 min-h-[200px]">
+                        <div key={year} className="relative flex flex-col items-center w-64 min-h-[200px]">
 
                             {/* Vertical Timeline */}
                             <div
@@ -90,15 +128,16 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
                                     backgroundSize: '1px 3px'
                                 }}
                             />
-                            {eventsByYear[year]?.map((event) => (
+                            {events[year]?.map((event) => (
                                 <div
                                     key={event.id}
-                                    className="relative flex flex-col items-center z-10 w-full mb-6"
+                                    // ref={e => { eventRefs.current[event.id] = e }}
+                                    className="relative cursor-pointer flex flex-col items-center z-10 w-full mb-6"
                                 >
                                     {/* Box event */}
                                     <Tooltip title={event.title}>
                                         <div
-                                            className="bg-white flex text-left rounded py-1 min-w-42 h-[55px] text-xs shadow-md cursor-pointer"
+                                            className="bg-white flex text-left rounded py-1 min-w-42 max-w-42 h-[55px] text-xs shadow-md cursor-pointer"
                                             onClick={() => handleEventClick(event.id)}
                                         >
                                             <div className="flex items-center h-full">
@@ -166,5 +205,5 @@ const Timetoast = ({ onLoadComplete }: TimetoastProps) => {
     );
 };
 
-export default Timetoast;
+export default Timeline;
 

@@ -1,14 +1,11 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import Timetoast from '../../components/Timetoast'
-import SearchBar from '@/components/home/searchBar'
-import { useState } from 'react'
-import CustomCircularLoading from '@/components/layouts/CustomCircularLoading'
 import HistoryFigure from '@/components/historicalFigure/historyFigure'
+import TimeToast from '@/components/timetoast/timeToast'
+import AboutUs from '@/components/home/aboutUs'
+import Quiz from '@/components/home/quiz/quiz'
 
 const Home = () => {
-
-  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <main>
@@ -16,17 +13,15 @@ const Home = () => {
 
       <div className="container mx-auto">
 
-        {isLoading && <CustomCircularLoading />}
-        <section className='flex flex-col md:flex-row gap-2 md:gap-10 ml-2'>
-          <SearchBar />
-          <Timetoast onLoadComplete={() => {
-            setIsLoading(false);
-          }} />
-        </section>
+        <AboutUs />
+
+        <TimeToast />
 
         <section className='my-10'>
           <HistoryFigure />
         </section>
+
+        <Quiz />
 
       </div>
 
