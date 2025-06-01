@@ -1,6 +1,7 @@
 import historicalFigureService from "@/services/historicalFigureService";
 import type { HistoricalFigure } from "@/types/historicalFigure";
 import { useEffect, useState } from "react";
+import CustomCircularLoading from "../layouts/CustomCircularLoading";
 
 interface HistoryFigureSearchProps {
     onResults: (data: HistoricalFigure[]) => void;
@@ -9,11 +10,13 @@ interface HistoryFigureSearchProps {
 const HistoryFigureSearch = ({ onResults }: HistoryFigureSearchProps) => {
 
     const [nameInput, setNameInput] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleSearch = async () => {
         try {
             const data = await historicalFigureService.getAllHistoricalFiguresAsync(nameInput);
             onResults(data);
+            setIsLoading(false);
         }
 
         catch (err) {
@@ -24,6 +27,10 @@ const HistoryFigureSearch = ({ onResults }: HistoryFigureSearchProps) => {
     useEffect(() => {
         handleSearch();
     }, [nameInput])
+
+    if (isLoading) {
+        return <CustomCircularLoading/>
+    }
 
     return (
         <section className="border">
@@ -53,7 +60,6 @@ const HistoryFigureSearch = ({ onResults }: HistoryFigureSearchProps) => {
                 </div>
             </div>
         </section>
-
     )
 }
 
