@@ -3,6 +3,7 @@ import Footer from '../../components/Footer'
 import HistoryFigure from '@/components/historicalFigure/historyFigure'
 import TimeToast from '@/components/timetoast/timeToast'
 import AboutUs from '@/components/home/aboutUs'
+import Quiz from '@/components/home/quiz/quiz'
 
 const Home = () => {
 
@@ -19,6 +20,8 @@ const Home = () => {
         <section className='my-10'>
           <HistoryFigure />
         </section>
+
+        <Quiz />
 
       </div>
 
