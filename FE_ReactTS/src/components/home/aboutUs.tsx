@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import aboutUs1 from '../../assets/images/aboutUs/aboutUs1.jpg';
 import aboutUs2 from '../../assets/images/aboutUs/aboutUs2.jpg';
 
@@ -21,12 +22,13 @@ const AboutUs = () => {
                     </div>
 
                     <div>
-                        <button
+                        <Link
+                            to={'/about-us'}
                             className='border-2 cursor-pointer
                              transition-colors duration-200
                              hover:bg-[#1a237e] hover:text-white border-black py-2.5 px-4 rounded font-semibold'>
                             XEM THÊM
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

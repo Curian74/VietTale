@@ -8,7 +8,7 @@ const Header = () => {
 
     const navItems = [
         { label: "Trang chủ", to: "/" },
-        { label: "Giới thiệu", to: "#" },
+        { label: "Giới thiệu", to: "/about-us" },
         { label: "Sách", to: "#" },
         { label: "Video", to: "#" },
     ]

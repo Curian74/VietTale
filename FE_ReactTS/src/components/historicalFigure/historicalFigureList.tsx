@@ -18,9 +18,9 @@ const HistoricalFigureList = ({ figures, selectedFigure, onSelectFigure }: Histo
                             ${selectedFigure?.id === c.id ? 'bg-[#bfe0f6]' : ''}`}
                     >
                         <img
-                            className="rounded-full object-cover h-15 w-fit"
+                            className="rounded-full object-cover w-15 h-15 border-2 border-gray-300 shadow-sm"
                             src={c.avatar}
-                            alt="Image"
+                            alt={c.name}
                         />
                         <p className="font-[400]">{c.name}</p>
                     </div>
