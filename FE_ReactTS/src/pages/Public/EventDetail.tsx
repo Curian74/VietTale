@@ -10,7 +10,7 @@ const EventDetail = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     return (
-        <main>
+        <main className='bg-[#fdf6ea]'>
             <Header />
 
             <div className="container mx-auto">

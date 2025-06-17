@@ -73,7 +73,7 @@ const TimeToast = () => {
     return (
         <>
             <div className="text-center mb-4">
-                <h1 className="text-3xl font-medium uppercase mb-5">Giai đoạn lịch sử</h1>
+                <h1 className="text-3xl font-medium uppercase mb-2">Giai đoạn lịch sử</h1>
                 <DashedLine />
             </div>
             <section className='flex flex-col md:flex-row gap-2 md:gap-10 ml-2'>

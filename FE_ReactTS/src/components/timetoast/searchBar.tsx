@@ -28,10 +28,10 @@ const SearchBar = ({ onSearchChange, onClearFilters, selectedTimelineId }: Searc
     }, [])
 
     return (
-        <aside className="bg-[#f3f3f3] ml-1 w-56 max-h-[65vh] pb-60 border">
+        <aside className="bg-[#f9f2e5] ml-1 w-56 max-h-[65vh] pb-60 border">
             {/* Title */}
-            <div className="bg-[#193cb8] p-2 font-medium text-start">
-                <p className="text-white">Tìm kiếm</p>
+            <div className="bg-[#f8b560] p-2 font-medium text-start">
+                <p className="text-black">Tìm kiếm</p>
             </div>
 
             {/* Content */}

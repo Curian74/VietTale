@@ -11,7 +11,7 @@ export function QADropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-gray-100 text-blue-800 hover:bg-gray-200 w-30 text-md cursor-pointer">
+        <Button className="bg-[#f8b560] text-black hover:bg-[#d0a670] w-30 text-md cursor-pointer">
           Q&A
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
             className="size-4">
