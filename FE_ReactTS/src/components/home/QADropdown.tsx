@@ -19,7 +19,7 @@ export function QADropdown() {
           </svg>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 mt-3">
+      <DropdownMenuContent className="w-56 z-100">
         <DropdownMenuGroup className="font-medium">
           <DropdownMenuItem className="cursor-pointer">
             Lịch sử 12
