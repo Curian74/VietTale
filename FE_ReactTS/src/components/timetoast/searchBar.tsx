@@ -50,12 +50,12 @@ const SearchBar = ({ onSearchChange, onClearFilters, selectedTimelineId }: Searc
                     </select>
                 </div>
 
-                <div>
+                {/* <div>
                     <p className="font-medium my-2 text-sm">Thẻ tag</p>
                     <select className="bg-white py-1 w-full border cursor-pointer">
                         <option value={''}>Thẻ tag</option>
                     </select>
-                </div>
+                </div> */}
 
                 <div className="flex justify-center mt-4">
                     <button
