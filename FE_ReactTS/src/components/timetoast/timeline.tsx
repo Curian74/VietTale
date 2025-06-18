@@ -160,6 +160,7 @@ const Timeline = ({
                 <div className="flex justify-between mt-3 px-6 pb-6">
                     <Button
                         onClick={handlePrev}
+                        disabled={pageIndex === 1}
                         className="px-4 py-2 bg-[#817b7b] text-white rounded hover:bg-[#585353] disabled:opacity-50"
                     >
                         Previous
