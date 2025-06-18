@@ -8,7 +8,7 @@ import Quiz from '@/components/home/quiz/quiz'
 const Home = () => {
 
   return (
-    <main>
+    <main className='bg-[#fdf6ea]'>
       <Header />
 
       <div className="container mx-auto">

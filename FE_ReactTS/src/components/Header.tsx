@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { QADropdown } from "./home/QADropdown"
+import logoImage from '../assets//images/logo/logo.jpg';
 
 const Header = () => {
     const location = useLocation()
@@ -8,15 +9,14 @@ const Header = () => {
 
     const navItems = [
         { label: "Trang chủ", to: "/" },
-        { label: "Giới thiệu", to: "#" },
+        { label: "Giới thiệu", to: "/about-us" },
         { label: "Sách", to: "#" },
         { label: "Video", to: "#" },
     ]
 
     return (
-        <header className="bg-blue-800 text-white shadow mb-10 sticky top-0 z-100">
+        <header className="bg-[#fdf6ea] text-black shadow mb-10 sticky top-0 z-100">
             <div className="max-w-7xl mx-auto py-4 flex items-center justify-between">
-
                 {/* Logo */}
                 <Link
                     to="/"
@@ -28,11 +28,11 @@ const Header = () => {
                     }}
                     className="text-2xl font-bold"
                 >
-                    VietTale
+                    <img className="rounded-full max-w-20" src={logoImage}></img>
                 </Link>
 
                 {/* Navigation */}
-                <nav className="space-x-6 text-white font-medium">
+                <nav className="space-x-6 text-black font-medium">
                     {navItems.map((item) => (
                         <Link
                             key={item.to}
@@ -43,7 +43,7 @@ const Header = () => {
                                     window.location.reload()
                                 }
                             }}
-                            className="hover:border-b-2 hover:border-white pb-1 transition"
+                            className="hover:border-b-2 hover:border-black pb-1 transition"
                         >
                             {item.label}
                         </Link>
@@ -61,7 +61,7 @@ const Header = () => {
                     </Button>
                     <Button
                         variant="secondary"
-                        className="bg-[#f6f6f7] cursor-pointer hover:bg-[#e9e9e2] text-black">
+                        className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">
                         Đăng ký
                     </Button>
                 </div>
