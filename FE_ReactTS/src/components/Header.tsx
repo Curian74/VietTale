@@ -15,7 +15,7 @@ const Header = () => {
     ]
 
     return (
-        <header className="bg-[#fdf6ea] text-black shadow mb-10 sticky top-0 z-100">
+        <header className="bg-[#fdf6ea] text-black shadow mb-0 sticky top-0 z-100">
             <div className="max-w-7xl mx-auto py-4 flex items-center justify-between">
                 {/* Logo */}
                 <Link
@@ -54,11 +54,13 @@ const Header = () => {
 
                 {/* Auth buttons */}
                 <div className="ml-10 flex flex-col md:flex-row gap-3">
-                    <Button
-                        variant="secondary"
-                        className="bg-[#212121] cursor-pointer hover:bg-[#2f2f2f] text-white">
-                        Đăng nhập
-                    </Button>
+                    <Link to={'auth/login'}>
+                        <Button
+                            variant="secondary"
+                            className="bg-[#212121] cursor-pointer hover:bg-[#2f2f2f] text-white">
+                            Đăng nhập
+                        </Button>
+                    </Link>
                     <Button
                         variant="secondary"
                         className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">

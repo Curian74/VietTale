@@ -88,7 +88,7 @@ const Quiz = () => {
             </div>
 
             {/* Quiz Content */}
-            <div className="bg-[#fefaf3] border-2 rounded-lg p-6">
+            <div className="bg-[#fefaf3] border-2 rounded-lg p-6 mb-10">
                 <h2 className="font-semibold mb-4 text-center">{question}</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">

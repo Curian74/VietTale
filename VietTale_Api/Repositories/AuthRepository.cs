@@ -2,7 +2,6 @@
 using VietTale_Api.Database;
 using VietTale_Api.Dtos.Requests;
 using VietTale_Api.Interfaces;
-using VietTale_Api.Migrations;
 using VietTale_Api.Models;
 
 namespace VietTale_Api.Repositories

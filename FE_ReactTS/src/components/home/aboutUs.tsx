@@ -6,7 +6,7 @@ const INTRODUCTION_TEXT = 'Trải qua lịch sử hàng ngàn năm dựng và gi
 
 const AboutUs = () => {
     return (
-        <section className="mb-10 w-10/12 ml-2 md:ml-20">
+        <section className="mb-10 w-10/12 ml-2 md:ml-20 mt-10">
             <div>
                 <h1 className='uppercase text-3xl font-medium'>Về chúng tôi</h1>
             </div>
