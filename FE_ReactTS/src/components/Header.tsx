@@ -3,6 +3,14 @@ import { Link, useLocation } from "react-router-dom"
 import { QADropdown } from "./home/QADropdown"
 import logoImage from '../assets//images/logo/logo.jpg';
 import useAuth from "@/contexts/AuthProvider";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { LogOut, Settings, User } from "lucide-react";
 
 const Header = () => {
     const location = useLocation()
@@ -12,10 +20,24 @@ const Header = () => {
         { label: "Trang chủ", to: "/" },
         { label: "Giới thiệu", to: "/about-us" },
         { label: "Sách", to: "#" },
-        { label: "Video", to: "#" },
+        { label: "Video", to: "##" },
     ]
 
     const { isAuthenticated, logout } = useAuth();
+
+    const dropdownItem = [
+        {
+            title: "Tài khoản",
+            icon: User,
+            style: ""
+        },
+        {
+            title: "Đăng xuất",
+            icon: LogOut,
+            style: "text-[#d84545]",
+            onclick: logout
+        },
+    ];
 
     return (
         <header className="bg-[#fdf6ea] text-black shadow mb-0 sticky top-0 z-100">
@@ -72,12 +94,46 @@ const Header = () => {
                                 Đăng ký
                             </Button>
                         </>
-                        : <Button
-                            variant="secondary"
-                            onClick={logout}
-                            className="bg-[#d84545] hover:bg-[#c82333] cursor-pointer text-white">
-                            Đăng xuất
-                        </Button>
+                        :
+                        <div>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <div className="flex items-center cursor-pointer">
+                                        <img
+                                            className="rounded-full w-20 md:w-10"
+                                            src="https://avatars.githubusercontent.com/u/178352543?v=4"
+                                        />
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="size-6"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </div>
+                                </DropdownMenuTrigger>
+
+                                <DropdownMenuContent className="w-56 z-100">
+                                    <DropdownMenuGroup className="font-medium">
+                                        {dropdownItem.map((item, index) => {
+                                            const IconComponent = item.icon;
+                                            return (
+                                                <DropdownMenuItem
+                                                    onClick={item.onclick}
+                                                    key={index}
+                                                    className="cursor-pointer flex items-center gap-2">
+                                                    <IconComponent className={item.style} />
+                                                    {item.title}
+                                                </DropdownMenuItem>
+                                            );
+                                        })}
+                                    </DropdownMenuGroup>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     }
                 </div>
             </div>

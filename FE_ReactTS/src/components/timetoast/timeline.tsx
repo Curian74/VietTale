@@ -83,7 +83,8 @@ const Timeline = ({
 
     return (
         <section
-            className="relative max-w-7xl p-0 mb-3 border border-gray-200 shadow bg-cover bg-center"
+            className="relative max-w-7xl p-0 mb-3 border border-gray-200 shadow bg-cover bg-center
+            animate-[fadeInRight_1s_ease-out]"
             style={{ backgroundImage: `url(${figure_detail})` }}
         >
             <div className="absolute inset-0 bg-[#efefef]/85 z-0 pointer-events-none"></div>
