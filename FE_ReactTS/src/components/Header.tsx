@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { QADropdown } from "./home/QADropdown"
 import logoImage from '../assets//images/logo/logo.jpg';
+import useAuth from "@/contexts/AuthProvider";
 
 const Header = () => {
     const location = useLocation()
-    const currentPath = location.pathname
+    const currentPath = location.pathname;
 
     const navItems = [
         { label: "Trang chủ", to: "/" },
@@ -13,6 +14,8 @@ const Header = () => {
         { label: "Sách", to: "#" },
         { label: "Video", to: "#" },
     ]
+
+    const { isAuthenticated, logout } = useAuth();
 
     return (
         <header className="bg-[#fdf6ea] text-black shadow mb-0 sticky top-0 z-100">
@@ -54,18 +57,28 @@ const Header = () => {
 
                 {/* Auth buttons */}
                 <div className="ml-10 flex flex-col md:flex-row gap-3">
-                    <Link to={'auth/login'}>
-                        <Button
+                    {!isAuthenticated ?
+                        <>
+                            <Link to={'/auth/login'}>
+                                <Button
+                                    variant="secondary"
+                                    className="bg-[#212121] cursor-pointer hover:bg-[#2f2f2f] text-white">
+                                    Đăng nhập
+                                </Button>
+                            </Link>
+                            <Button
+                                variant="secondary"
+                                className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">
+                                Đăng ký
+                            </Button>
+                        </>
+                        : <Button
                             variant="secondary"
-                            className="bg-[#212121] cursor-pointer hover:bg-[#2f2f2f] text-white">
-                            Đăng nhập
+                            onClick={logout}
+                            className="bg-[#d84545] hover:bg-[#c82333] cursor-pointer text-white">
+                            Đăng xuất
                         </Button>
-                    </Link>
-                    <Button
-                        variant="secondary"
-                        className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">
-                        Đăng ký
-                    </Button>
+                    }
                 </div>
             </div>
         </header>

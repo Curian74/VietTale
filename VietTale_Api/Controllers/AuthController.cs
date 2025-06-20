@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VietTale_Api.Dtos.Requests;
+using VietTale_Api.Dtos.Responses;
 using VietTale_Api.Interfaces;
 using VietTale_Api.Repositories;
 using VietTale_Api.Utils;
@@ -36,7 +37,11 @@ namespace VietTale_Api.Controllers
 
                 var jwtToken = await _jwtTokenProvider.CreateToken(user);
 
-                return Ok(jwtToken);
+                return Ok(new LoginResponseDto
+                {
+                    Email = dto.Email,
+                    Token = jwtToken,
+                });
             }
 
             catch (KeyNotFoundException ex)
