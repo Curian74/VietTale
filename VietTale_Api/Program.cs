@@ -130,12 +130,41 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true
         };
 
-        var createResult = await userManager.CreateAsync(newAdmin, "admin");
+        var newMember = new AppUser
+        {
+            UserName = "member",
+            Email = "member@gmail.com",
+            EmailConfirmed = true,
+        };
+
+        var createResult = await userManager.CreateAsync(newAdmin, "admin123");
 
         if (createResult.Succeeded)
         {
             await userManager.AddToRoleAsync(newAdmin, "Admin");
         }
+    }
+
+    var memberEmail = "member@gmail.com";
+    var memberUsername = "member";
+    var memberUser = await userManager.FindByEmailAsync(memberEmail);
+
+    if (memberUser == null)
+    {
+        var newMember = new AppUser
+        {
+            UserName = memberUsername,
+            Email = memberEmail,
+            EmailConfirmed = true,
+        };
+
+        var createMemberResult = await userManager.CreateAsync(newMember, "member123");
+
+        if (createMemberResult.Succeeded)
+        {
+            await userManager.AddToRoleAsync(newMember, "Member");
+        }
+
     }
 }
 

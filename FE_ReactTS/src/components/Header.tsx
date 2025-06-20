@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { QADropdown } from "./home/QADropdown"
 import logoImage from '../assets//images/logo/logo.jpg';
 import useAuth from "@/contexts/AuthProvider";
@@ -10,11 +10,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 
 const Header = () => {
-    const location = useLocation()
+    const location = useLocation();
     const currentPath = location.pathname;
+
+    const navigate = useNavigate();
 
     const navItems = [
         { label: "Trang chủ", to: "/" },
@@ -23,14 +25,16 @@ const Header = () => {
         { label: "Video", to: "##" },
     ]
 
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout, user } = useAuth();
 
     const dropdownItem = [
         {
             title: "Tài khoản",
             icon: User,
-            style: ""
+            style: "",
+            onclick: () => navigate('/dasdassad'),
         },
+
         {
             title: "Đăng xuất",
             icon: LogOut,

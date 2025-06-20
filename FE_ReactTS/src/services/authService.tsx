@@ -6,8 +6,14 @@ const loginAsync = async (requestData: LoginRequest) => {
     return response.data;
 }
 
+const getCurrentUserAsync = async (email: string | null) => {
+    const response = await axios.get(`Auth/Me?email=${email}`);
+    return response.data;
+}
+
 const authService = {
     loginAsync,
+    getCurrentUserAsync,
 }
 
 export default authService;

@@ -1,17 +1,22 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
+import type { AppUser } from '@/types/appUser';
+import authService from '@/services/authService';
 
 interface AuthContextType {
     token: string | null;
     login: (newToken: string, email: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    user: AppUser | undefined;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem('accessToken'));
+    const [user, setUser] = useState<AppUser>();
+
     const navigate = useNavigate();
 
     const login = (newToken: string, email: string) => {
@@ -30,8 +35,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         navigate('/auth/login');
     };
 
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const userEmail = localStorage.getItem('email');
+                const data = await authService.getCurrentUserAsync(userEmail);
+
+                setUser(data);
+            }
+
+            catch (error) {
+                console.log(error);
+            }
+        }
+        fetchCurrentUser();
+    }, [])
+
     return (
-        <AuthContext.Provider value={{ token, logout, login, isAuthenticated: !!token }}>
+        <AuthContext.Provider value={{ token, logout, login, user, isAuthenticated: !!token }}>
             {children}
         </AuthContext.Provider>
     )

@@ -8,6 +8,8 @@ import type { LoginRequest } from '@/types/requests/loginRequest';
 import authService from '@/services/authService';
 import useAuth from '@/contexts/AuthProvider';
 import { useNavigate } from 'react-router';
+import type { AxiosError } from 'axios';
+import { useState } from 'react';
 
 const validationSchema = yup.object().shape({
     email: yup.string().required('Vui lòng nhập email!'),
@@ -15,6 +17,7 @@ const validationSchema = yup.object().shape({
 })
 
 const Login = () => {
+    const [errorMsg, setErrorMsg] = useState('');
 
     const { login } = useAuth();
 
@@ -35,8 +38,12 @@ const Login = () => {
             navigate('/');
         }
 
-        catch (err) {
-            console.log(err);
+        catch (error) {
+            const axiosError = error as AxiosError;
+            console.log(error);
+            if (axiosError.response) {
+                setErrorMsg(axiosError.response.data as string);
+            }
         }
     }
 
@@ -86,9 +93,13 @@ const Login = () => {
                             {errors.password?.message && <p className='text-red-400 text-sm'>{errors.password.message}</p>}
                         </div>
 
+                        {errorMsg && (
+                            <p className='text-red-400 text-md'>{errorMsg}</p>
+                        )}
+
                         <button
                             type="submit"
-                            className="w-full cursor-pointer bg-[#caa468] hover:bg-[#b89252] hover:scale-[1.02] 
+                            className="w-full cursor-pointer bg-[#cc9e55] hover:bg-[#b89252] hover:scale-[1.02] 
                                     text-white font-medium py-2 rounded-md shadow-sm 
                                     transition-transform duration-200 ease-in-out"
                         >

@@ -26,7 +26,7 @@ namespace VietTale_Api.Repositories
 
         public async Task<bool> LoginAsync(LoginRequestDto dto)
         {
-            var user = await FindUserByEmailAsync(dto.Email) ?? throw new KeyNotFoundException("User not found.");
+            var user = await FindUserByEmailAsync(dto.Email) ?? throw new KeyNotFoundException("Không tìm thấy người dùng!");
 
             var result = await _userManager.CheckPasswordAsync(user, dto.Password);
 

@@ -30,7 +30,7 @@ namespace VietTale_Api.Controllers
 
                 if (!result)
                 {
-                    return BadRequest("Invalid Credentials.");
+                    return BadRequest("Email hoặc mật khẩu không chính xác!");
                 }
 
                 var user = await _authRepository.FindUserByEmailAsync(dto.Email);
@@ -61,6 +61,19 @@ namespace VietTale_Api.Controllers
             var result = await _authRepository.RegisterAsync(dto);
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Me([FromQuery] string email)
+        {
+            var user = await _authRepository.FindUserByEmailAsync(email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
     }
 }
