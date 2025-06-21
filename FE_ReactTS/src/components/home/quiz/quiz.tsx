@@ -60,7 +60,7 @@ const Quiz = () => {
     const { question, options } = quizData[activeTab]
 
     return (
-        <section className="max-w-3xl mx-auto">
+        <section className="max-w-3xl mx-auto animate-[bottomFadeIn_1s_ease-out]">
             {/* Title */}
             <div className="text-center mb-4">
                 <h1 className="text-3xl font-medium uppercase mb-2">Trắc nghiệm</h1>
@@ -88,7 +88,7 @@ const Quiz = () => {
             </div>
 
             {/* Quiz Content */}
-            <div className="bg-[#fefaf3] border-2 rounded-lg p-6">
+            <div className="bg-[#fefaf3] border-2 rounded-lg p-6 mb-10">
                 <h2 className="font-semibold mb-4 text-center">{question}</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
