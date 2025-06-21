@@ -2,10 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import type { AppUser } from '@/types/appUser';
 import authService from '@/services/authService';
+import Swal from 'sweetalert2';
 
 interface AuthContextType {
     token: string | null;
-    login: (newToken: string, email: string) => void;
+    login: (newToken: string, email: string, refreshToken: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
     user: AppUser | undefined;
@@ -20,21 +21,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const navigate = useNavigate();
 
-    const login = (newToken: string, email: string) => {
+    const login = (newToken: string, email: string, refreshToken: string) => {
         localStorage.setItem('accessToken', newToken);
         localStorage.setItem('email', email);
+        localStorage.setItem('refreshToken', refreshToken);
         setToken(newToken);
     };
 
     const logout = () => {
-        const isConfirm = confirm('Bạn có chắc là muốn đăng xuất không?');
-
-        if (!isConfirm) return;
-
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('email');
-        setToken(null);
-        navigate('/auth/login');
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn đăng xuất không?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đăng xuất',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('email');
+                localStorage.removeItem('refreshToken');
+                setToken(null);
+                navigate('/auth/login');
+            }
+        });
     };
 
     useEffect(() => {

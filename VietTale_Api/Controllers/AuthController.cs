@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using VietTale_Api.Dtos;
 using VietTale_Api.Dtos.Requests;
 using VietTale_Api.Dtos.Responses;
 using VietTale_Api.Interfaces;
@@ -22,6 +25,27 @@ namespace VietTale_Api.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> RefreshToken([FromBody] GetRefreshTokenDto dto)
+        {
+            try
+            {
+                var result = await _authRepository.GetNewRefreshTokenAsync(dto.RefreshToken);
+
+                return Ok(result);
+            }
+
+            catch (KeyNotFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            catch (InvalidExpressionException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDto dto)
         {
             try
@@ -37,10 +61,15 @@ namespace VietTale_Api.Controllers
 
                 var jwtToken = await _jwtTokenProvider.CreateToken(user);
 
+                var refreshToken = _jwtTokenProvider.GenerateRefreshToken();
+
+                await _authRepository.UpdateRefreshToken(user, refreshToken);
+
                 return Ok(new LoginResponseDto
                 {
                     Email = dto.Email,
                     Token = jwtToken,
+                    RefreshToken = refreshToken
                 });
             }
 

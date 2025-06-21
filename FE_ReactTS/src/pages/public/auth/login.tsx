@@ -38,8 +38,9 @@ const Login = () => {
 
             const token = data.token;
             const email = data.email;
+            const refreshToken = data.refreshToken;
 
-            login(token, email);
+            login(token, email, refreshToken);
             navigate('/');
         }
 

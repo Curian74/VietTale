@@ -46,5 +46,10 @@ namespace VietTale_Api.Utils
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public Guid GenerateRefreshToken()
+        {
+            return Guid.NewGuid();
+        }
     }
 }
