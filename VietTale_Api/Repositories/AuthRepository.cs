@@ -35,6 +35,13 @@ namespace VietTale_Api.Repositories
 
         public async Task<IdentityResult> RegisterAsync(RegisterRequestDto dto)
         {
+            var existingUser = await FindUserByEmailAsync(dto.Email);
+
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("Email này đã được sử dụng.");
+            }
+
             var newUser = new AppUser
             {
                 Email = dto.Email,

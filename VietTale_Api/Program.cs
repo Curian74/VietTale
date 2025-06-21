@@ -55,6 +55,11 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(op =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+});
+
 #region Jwt Authentication configuration.
 
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!));

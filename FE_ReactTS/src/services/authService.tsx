@@ -1,5 +1,6 @@
 import type { LoginRequest } from "@/types/requests/loginRequest";
 import axios from '@/configs/axios';
+import type { RegisterRequest } from "@/types/requests/registerRequest";
 
 const loginAsync = async (requestData: LoginRequest) => {
     const response = await axios.post('Auth/Login', requestData);
@@ -11,9 +12,15 @@ const getCurrentUserAsync = async (email: string | null) => {
     return response.data;
 }
 
+const registerAsync = async (requestData: RegisterRequest) => {
+    const response = await axios.post('Auth/Register', requestData);
+    return response.data;
+}
+
 const authService = {
     loginAsync,
     getCurrentUserAsync,
+    registerAsync,
 }
 
 export default authService;

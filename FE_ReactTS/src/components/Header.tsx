@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { QADropdown } from "./home/QADropdown"
 import logoImage from '../assets//images/logo/logo.jpg';
-import useAuth from "@/contexts/AuthProvider";
+import { useAuth } from "@/contexts/AuthProvider";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { LogOut, User } from "lucide-react";
+import userAvatar from '@/assets/images/user/defaultAvatar.jpg';
 
 const Header = () => {
     const location = useLocation();
@@ -32,7 +33,7 @@ const Header = () => {
             title: "Tài khoản",
             icon: User,
             style: "",
-            onclick: () => navigate('/dasdassad'),
+            onclick: () => navigate('/auth/profile'),
         },
 
         {
@@ -92,11 +93,14 @@ const Header = () => {
                                     Đăng nhập
                                 </Button>
                             </Link>
-                            <Button
-                                variant="secondary"
-                                className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">
-                                Đăng ký
-                            </Button>
+                            <Link
+                                to={"/auth/register"}>
+                                <Button
+                                    variant="secondary"
+                                    className="bg-[#f8b560] cursor-pointer hover:bg-[#d0a670] text-black">
+                                    Đăng ký
+                                </Button>
+                            </Link>
                         </>
                         :
                         <div>
@@ -105,7 +109,7 @@ const Header = () => {
                                     <div className="flex items-center cursor-pointer">
                                         <img
                                             className="rounded-full w-20 md:w-10"
-                                            src="https://avatars.githubusercontent.com/u/178352543?v=4"
+                                            src={user?.avatar || userAvatar}
                                         />
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

@@ -58,9 +58,17 @@ namespace VietTale_Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequestDto dto)
         {
-            var result = await _authRepository.RegisterAsync(dto);
+            try
+            {
+                var result = await _authRepository.RegisterAsync(dto);
 
-            return Ok(result);
+                return Ok(result);
+            }
+
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

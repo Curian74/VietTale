@@ -16,6 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem('accessToken'));
     const [user, setUser] = useState<AppUser>();
+    const [isLoading, setIsLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (!isConfirm) return;
 
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('email');
         setToken(null);
         navigate('/auth/login');
     };
@@ -40,20 +42,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             try {
                 const userEmail = localStorage.getItem('email');
                 const data = await authService.getCurrentUserAsync(userEmail);
-
                 setUser(data);
-            }
-
-            catch (error) {
+            } catch (error) {
                 console.log(error);
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
         fetchCurrentUser();
-    }, [])
+    }, [token]);
 
     return (
         <AuthContext.Provider value={{ token, logout, login, user, isAuthenticated: !!token }}>
-            {children}
+            {isLoading ? <div></div> : children}
         </AuthContext.Provider>
     )
 }
@@ -66,5 +67,5 @@ const useAuth = () => {
     return context;
 };
 
-export default useAuth;
+export { useAuth };
 
