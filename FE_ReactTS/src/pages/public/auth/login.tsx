@@ -11,8 +11,7 @@ import { Link, useNavigate } from 'react-router';
 import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useLocation } from 'react-router';
-import { Alert } from '@mui/material';
-
+import { Alert, CircularProgress } from '@mui/material';
 
 const validationSchema = yup.object().shape({
     email: yup.string().required('Vui lòng nhập email!'),
@@ -21,6 +20,8 @@ const validationSchema = yup.object().shape({
 
 const Login = () => {
     const [errorMsg, setErrorMsg] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const location = useLocation();
     const successMsg = location.state?.registerMessage;
 
@@ -33,6 +34,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLoginAsync = async (formData: LoginRequest) => {
+        setIsLoading(true);
         try {
             const data = await authService.loginAsync(formData);
 
@@ -50,6 +52,10 @@ const Login = () => {
             if (axiosError.response) {
                 setErrorMsg(axiosError.response.data as string);
             }
+        }
+
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -110,18 +116,30 @@ const Login = () => {
 
                         <button
                             type="submit"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSubmit(handleLoginAsync);
+                                }
+                            }}  
+                            disabled={isLoading}
                             className="w-full cursor-pointer bg-[#cc9e55] hover:bg-[#b89252] hover:scale-[1.02] 
                                     text-white font-medium py-2 rounded-md shadow-sm 
                                     transition-transform duration-200 ease-in-out"
                         >
-                            Đăng nhập
+                            {isLoading
+                                ? <CircularProgress
+                                    color="inherit"
+                                    className='mt-1 text-[#daddb9]'
+                                    size={30} />
+                                : <p>Đăng nhập</p>
+                            }
                         </button>
 
                         <p className="text-sm text-center text-[#5a4633] mt-4">
                             Chưa có tài khoản?
                             <Link
                                 to={'/auth/register'}
-                                className="underline text-[#8b5e3c]">
+                                className="underline text-[#8b5e3c] ml-1">
                                 Đăng ký ngay
                             </Link>
                         </p>

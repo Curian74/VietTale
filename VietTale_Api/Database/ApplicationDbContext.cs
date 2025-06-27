@@ -13,5 +13,8 @@ namespace VietTale_Api.Database
         public DbSet<EventTag> EventTags { get; set; }
         public DbSet<EventImages> EventsImages { get; set; }
         public DbSet<HistoricalFigure> HistoricalFigures { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Question> Question { get; set; }
     }
 }
