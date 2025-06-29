@@ -9,6 +9,7 @@ import { useState } from 'react';
 import authService from '@/services/authService';
 import type { AxiosError } from 'axios';
 import type { RegisterRequest } from '@/types/requests/registerRequest';
+import { CircularProgress } from '@mui/material';
 
 const validationSchema = yup.object().shape({
     email: yup.string().required('Vui lòng nhập email!'),
@@ -22,6 +23,7 @@ const validationSchema = yup.object().shape({
 
 const Register = () => {
     const [errorMsg, setErrorMsg] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validationSchema),
@@ -30,7 +32,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const handleRegisterAsync = async (formData: RegisterRequest) => {
-        console.log("ali");
+        setIsLoading(true);
         try {
             const data = await authService.registerAsync(formData);
 
@@ -50,6 +52,10 @@ const Register = () => {
             if (axiosError.response) {
                 setErrorMsg(axiosError.response.data as string);
             }
+        }
+
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -135,18 +141,30 @@ const Register = () => {
 
                         <button
                             type="submit"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSubmit(handleRegisterAsync);
+                                }
+                            }}
+                            disabled={isLoading}
                             className="w-full cursor-pointer bg-[#cc9e55] hover:bg-[#b89252] hover:scale-[1.02] 
                                     text-white font-medium py-2 rounded-md shadow-sm 
                                     transition-transform duration-200 ease-in-out"
                         >
-                            Đăng Ký
+                            {isLoading
+                                ? <CircularProgress
+                                    color="inherit"
+                                    className='mt-1 text-[#daddb9]'
+                                    size={30} />
+                                : <p>Đăng Ký</p>
+                            }
                         </button>
 
                         <p className="text-sm text-center text-[#5a4633] mt-4">
                             Đã có tài khoản?
                             <Link
                                 to={'/auth/login'}
-                                className="underline text-[#8b5e3c]">
+                                className="underline text-[#8b5e3c] ml-1">
                                 Đăng nhập ngay
                             </Link>
                         </p>

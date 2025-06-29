@@ -6,5 +6,7 @@ namespace VietTale_Api.Models
     {
         public Guid? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiresOn { get; set; }
+
+        public ICollection<UserSavedLesson>? SavedLessons { get; set; }
     }
 }

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import type { AppUser } from '@/types/appUser';
 import authService from '@/services/authService';
 import Swal from 'sweetalert2';
+import CustomCircularLoading from '@/components/layouts/CustomCircularLoading';
 
 interface AuthContextType {
     token: string | null;
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 localStorage.removeItem('email');
                 localStorage.removeItem('refreshToken');
                 setToken(null);
-                navigate('/auth/login');
+                navigate('/');
             }
         });
     };
@@ -64,7 +65,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <AuthContext.Provider value={{ token, logout, login, user, isAuthenticated: !!token }}>
-            {isLoading ? <div></div> : children}
+            {isLoading
+                ? <div className='flex justify-center items-center min-h-screen'>
+                    <CustomCircularLoading />
+                </div>
+                : children
+            }
         </AuthContext.Provider>
     )
 }
