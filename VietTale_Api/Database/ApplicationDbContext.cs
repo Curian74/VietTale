@@ -22,15 +22,6 @@ namespace VietTale_Api.Database
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<Lesson>().HasData(new Lesson
-            {
-                Id = 1,
-                CreatedAt = DateOnly.FromDateTime(DateTime.Now),
-                NumberOfLearners = 15,
-                NumberOfQuestions = 10,
-                Name = "Test",
-            });
         }
     }
 }

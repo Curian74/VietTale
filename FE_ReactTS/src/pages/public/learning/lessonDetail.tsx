@@ -36,10 +36,13 @@ import userFlashcardAttemptService from "@/services/userFlashcardAttemptService"
 import { useAuth } from "@/contexts/AuthProvider"
 import { Facebook, Link2, Twitter } from "lucide-react";
 import toast from 'react-hot-toast';
+import { CircularProgress } from "@mui/material"
 
 export default function LessonDetail() {
     const [lesson, setLesson] = useState<Lesson>();
     const [isLessonSaved, setIsLessonSaved] = useState<boolean>();
+    const [isSaving, setIsSaving] = useState(false);
+    const [isCheckingSave, setIsCheckingSave] = useState(true);
     const { id } = useParams();
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -62,11 +65,16 @@ export default function LessonDetail() {
     }
 
     const checkSavedLesson = async () => {
+        setIsCheckingSave(true);
         try {
             const response = await lessonService.checkSavedLesson(lesson?.id!, user?.id!);
             setIsLessonSaved(response.data.isSaved);
         } catch (err) {
             console.log(err);
+        }
+
+        finally {
+            setIsCheckingSave(false);
         }
     }
 
@@ -106,11 +114,16 @@ export default function LessonDetail() {
     }, [id])
 
     const handleSaveLesson = async () => {
+        setIsSaving(true);
         try {
             await lessonService.toggleSaveQuestion(lesson?.id!, user?.id!);
             checkSavedLesson();
         } catch (err) {
             console.log(err);
+        }
+
+        finally {
+            setIsSaving(false);
         }
     }
 
@@ -139,7 +152,6 @@ export default function LessonDetail() {
         window.open(twitterUrl, "_blank");
     };
 
-
     return (
         <>
             <Header />
@@ -156,18 +168,22 @@ export default function LessonDetail() {
                         </div>
                         <div className="flex items-center space-x-2">
                             <div>
-                                <Button
-                                    onClick={handleSaveLesson}
-                                    className={`flex items-center cursor-pointer gap-2 px-3 py-2 rounded-md border transition-colors duration-200
-                                    ${isLessonSaved ? 'bg-blue-100 text-blue-600 border-blue-300 hover:bg-[#dbdfff]'
-                                            : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'}`}
-                                    variant="ghost"
-                                >
-                                    <Bookmark className={`w-4 h-4 ${isLessonSaved ? 'fill-blue-500' : 'stroke-gray-500'}`} />
-                                    <span className="text-sm font-medium">
-                                        {isLessonSaved ? 'Đã lưu' : 'Lưu'}
-                                    </span>
-                                </Button>
+                                {!isSaving ?
+                                    !isCheckingSave ? <Button
+                                        onClick={handleSaveLesson}
+                                        className={`flex items-center cursor-pointer gap-2 px-3 py-2 rounded-md border transition-colors duration-200
+                                            ${isLessonSaved ? 'bg-blue-100 text-blue-600 border-blue-300 hover:bg-[#dbdfff]'
+                                                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'}`}
+                                        variant="ghost"
+                                    >
+                                        <Bookmark className={`w-4 h-4 ${isLessonSaved ? 'fill-blue-500' : 'stroke-gray-500'}`} />
+                                        <span className="text-sm font-medium">
+                                            {isLessonSaved ? 'Đã lưu' : 'Lưu'}
+                                        </span>
+                                    </Button>
+                                        : <CircularProgress size={25} />
+                                    : <CircularProgress size={25} />
+                                }
                             </div>
 
                             <DropdownMenu>

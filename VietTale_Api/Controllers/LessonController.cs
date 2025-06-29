@@ -38,6 +38,7 @@ namespace VietTale_Api.Controllers
             var query = _context.UserSavedLessons
                 .Include(x => x.User)
                 .Include(x => x.Lesson)
+                .Where(x => x.UserId == userId)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(queryObj.SortBy))
@@ -70,8 +71,10 @@ namespace VietTale_Api.Controllers
                 })
                 .ToListAsync();
 
+            var totalItems = await query.CountAsync();
+
             var data = new PagedResult<SavedLessonDto>(lessons,
-                queryObj.PageIndex, queryObj.PageSize, query.Count());
+                queryObj.PageIndex, queryObj.PageSize, totalItems);
 
             return Ok(data);
         }

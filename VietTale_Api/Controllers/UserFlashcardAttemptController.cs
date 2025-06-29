@@ -38,7 +38,7 @@ namespace VietTale_Api.Controllers
         public async Task<IActionResult> Create(CreateFlashcardAttemptDto dto)
         {
             var oldAttempt = await _context.UserFlashcardAttempt
-                .FirstOrDefaultAsync(x => x.LessonId == dto.LessonId);
+                .FirstOrDefaultAsync(x => x.LessonId == dto.LessonId && dto.UserId == x.UserId);
 
             if (oldAttempt == null)
             {

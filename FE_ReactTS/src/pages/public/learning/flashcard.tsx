@@ -127,17 +127,17 @@ export default function Flashcard() {
         <div
             tabIndex={0}
             onKeyDown={(e) => {
-                if (e.key === " " || e.key === "Spacebar") {
+                if (e.key === "Spacebar") {
                     e.preventDefault();
                     setIsFlipped(!isFlipped);
                 }
 
-                else if (e.key === " " || e.key === "ArrowLeft" && currentIndex >= 2) {
+                else if (e.key === "ArrowLeft" && currentIndex >= 2) {
                     setSlideDirection("left");
                     setCurrentIndex(currentIndex - 1);
                 }
 
-                else if (e.key === " " || e.key === "ArrowRight" && currentIndex <= lesson?.numberOfQuestions! - 1) {
+                else if (e.key === "ArrowRight" && currentIndex <= lesson?.numberOfQuestions! - 1) {
                     setSlideDirection("right");
                     setCurrentIndex(currentIndex + 1);
                 }

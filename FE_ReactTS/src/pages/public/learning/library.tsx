@@ -20,10 +20,11 @@ import {
 } from "@/components/ui/pagination"
 
 import userAvatar from "@/assets/images/user/defaultAvatar.jpg";
+import { CircularProgress } from "@mui/material"
 
 const sortBy = "LastActive";
 
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 5;
 
 export default function Library() {
   const [activeTab, setActiveTab] = useState("Học phần")
@@ -34,10 +35,12 @@ export default function Library() {
   const [pageIndex, setPageIndex] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isDescending, setIsDescending] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const tabs = ["Học phần"];
 
   const getSavedLessons = async () => {
+    setIsLoading(true);
     try {
       const query = {
         pageIndex: pageIndex,
@@ -53,6 +56,10 @@ export default function Library() {
 
     catch (err) {
       console.log(err);
+    }
+
+    finally {
+      setIsLoading(false);
     }
   }
 
@@ -127,28 +134,32 @@ export default function Library() {
             </div>
 
             {/* Study Set Card */}
-            {lessons.length > 0
-              ? lessons.map((x) => (
+            {isLoading ? (
+              <CircularProgress size={30} />
+            ) : lessons.length > 0 ? (
+              lessons.map((x) => (
                 <Card
                   key={x.id}
                   onClick={() => navigate(`/learning/lesson/${x.id}`)}
-                  className="bg-white border-b-4 shadow-sm border-t-4
-                 border-transparent hover:border-blue-300 transition-all cursor-pointer my-5 py-0">
+                  className="bg-white border-b-4 shadow-sm border-t-4 border-transparent hover:border-blue-300 transition-all cursor-pointer my-5 py-0"
+                >
                   <CardContent className="px-6 py-3 border-t-gray-200 rounded-md border-t-1">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="text-sm font-medium text-gray-600">{x.numberOfQuestions} thuật ngữ</span>
+                          <span className="text-sm font-medium text-gray-600">
+                            {x.numberOfQuestions} thuật ngữ
+                          </span>
                           <div className="flex items-center gap-2">
                             <div className="w-6 h-6 flex items-center justify-center">
                               <img
                                 src={x.user?.avatar || userAvatar}
-                                className="w-5 h-5 text-white rounded-full" />
+                                className="w-5 h-5 text-white rounded-full"
+                              />
                             </div>
-                            <span className="text-sm font-semibold text-gray-600">{x.user?.userName}</span>
-                            {/* <Badge variant="secondary" className="text-xs">
-                            Giáo viên
-                          </Badge> */}
+                            <span className="text-sm font-semibold text-gray-600">
+                              {x.user?.userName}
+                            </span>
                           </div>
                         </div>
                         <h3 className="text-xl font-bold text-gray-900">{x.name}</h3>
@@ -157,9 +168,11 @@ export default function Library() {
                   </CardContent>
                 </Card>
               ))
-              :
-              <p className="text-xl font-semibold text-gray-800">Không tìm thấy học phần nào.</p>
-            }
+            ) : (
+              <p className="text-xl font-semibold text-gray-800">
+                Không tìm thấy học phần nào.
+              </p>
+            )}
           </div>
         </div>
         <div className="text-center">
