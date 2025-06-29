@@ -5,11 +5,13 @@ import './App.css'
 import Index from './routes/Index';
 import { AuthProvider } from './contexts/AuthProvider';
 import { Analytics } from "@vercel/analytics/react"
+import { Toaster } from 'react-hot-toast';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        <Toaster position='top-center'/>
         <Index />
         <Analytics />
       </AuthProvider>

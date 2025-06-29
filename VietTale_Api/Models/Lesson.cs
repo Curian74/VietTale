@@ -15,5 +15,6 @@ namespace VietTale_Api.Models
         public AppUser? User { get; set; }
 
         public IList<Question>? Questions { get; set; }
+        public ICollection<UserSavedLesson>? SavedByUsers { get; set; }
     }
 }

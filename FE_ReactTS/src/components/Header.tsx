@@ -24,6 +24,7 @@ const Header = () => {
         { label: "Giới thiệu", to: "/about-us" },
         { label: "Sách", to: "#" },
         { label: "Video", to: "##" },
+        { label: "Ôn tập", to: "/learning/latest" },
     ]
 
     const { isAuthenticated, logout, user } = useAuth();

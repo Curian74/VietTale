@@ -5,9 +5,10 @@ import { useState } from "react";
 
 const navItems = [
     { label: "Trang chủ", to: "/learning/latest", icon: <Home size={18} /> },
-    { label: "Thư viện của bạn", to: "/#", icon: <FolderOpen size={18} /> },
+    { label: "Thư viện của bạn", to: "/learning/library", icon: <FolderOpen size={18} /> },
     { label: "Thông báo", to: "/#", icon: <Bell size={18} /> },
 ];
+
 
 export default function LearningSidebar() {
     const [collapsed, setCollapsed] = useState(false);

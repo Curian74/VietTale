@@ -16,5 +16,21 @@ namespace VietTale_Api.Database
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<UserFlashcardAttempt> UserFlashcardAttempt { get; set; }
+        public DbSet<UserSavedLesson> UserSavedLessons { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Lesson>().HasData(new Lesson
+            {
+                Id = 1,
+                CreatedAt = DateOnly.FromDateTime(DateTime.Now),
+                NumberOfLearners = 15,
+                NumberOfQuestions = 10,
+                Name = "Test",
+            });
+        }
     }
 }

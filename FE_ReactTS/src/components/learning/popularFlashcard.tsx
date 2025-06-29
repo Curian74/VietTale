@@ -1,9 +1,13 @@
 import lessonService from '@/services/lessonService';
 import type { Lesson } from '@/types/lesson';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import userAvatar from '@/assets/images/user/defaultAvatar.jpg';
 
 const PopularFlashcard = () => {
     const [flashcards, setFlashcards] = useState<Lesson[]>([]);
+
+    const navigate = useNavigate();
 
     const fetchPopularFlashcards = async () => {
         try {
@@ -16,7 +20,6 @@ const PopularFlashcard = () => {
             console.log(err);
         }
     }
-
     useEffect(() => {
         fetchPopularFlashcards();
     }, []);
@@ -26,12 +29,13 @@ const PopularFlashcard = () => {
             <p className="font-semibold text-gray-600 text-md mb-4">Bộ thẻ ghi nhớ phổ biến</p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                {flashcards.length > 0
-                    ? flashcards.map((card, index) => (
+                {flashcards.length > 0 ? (
+                    flashcards.map((card) => (
                         <div
-                            key={index}
-                            className="py-3 h-60 px-4 rounded-xl border-2 border-gray-200
-                         bg-white hover:shadow-md hover:border-blue-300 hover:border-b-6 transition-shadow"
+                            key={card.id}
+                            onClick={() => navigate(`/learning/lesson/${card.id}`)}
+                            className="cursor-pointer py-3 h-60 px-4 rounded-xl border-2 border-gray-200
+                            bg-white hover:shadow-md hover:border-blue-300 hover:border-b-6 transition-shadow"
                         >
                             <h3 className="text-lg font-semibold text-gray-800 mb-3">
                                 {card.name}
@@ -41,24 +45,24 @@ const PopularFlashcard = () => {
                                 {card.numberOfQuestions} thuật ngữ
                             </span>
 
-                            <div className='mt-30 flex items-center gap-2'>
+                            <div className="flex items-center gap-2 mt-30">
                                 <img
-                                    src='https://i.pinimg.com/736x/55/3b/7d/553b7d4c5657258292812991ef4edef8.jpg'
-                                    className='rounded-full w-6'
-                                >
-                                </img>
-                                <p className='text-sm font-medium text-black'>{card.user?.userName}</p>
-                                {/* <span className="text-xs rounded-sm bg-gray-200 px-2 text-black font-medium">
-                                    Giáo viên
-                                </span> */}
+                                    src={card.user?.avatar || userAvatar}
+                                    className="rounded-full w-6"
+                                    alt="avatar"
+                                />
+                                <p className="text-sm font-medium text-black">
+                                    {card.user?.userName}
+                                </p>
                             </div>
-
                         </div>
                     ))
-                    : <p className="font-semibold text-gray-600 text-md mb-4">Không có flashcard nào.</p>
-                }
+                ) : (
+                    <p className="font-semibold text-gray-600 text-md mb-4">Không có flashcard nào.</p>
+                )}
             </div>
         </div>
+
     );
 };
 
