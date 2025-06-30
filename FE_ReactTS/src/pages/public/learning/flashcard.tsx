@@ -127,7 +127,7 @@ export default function Flashcard() {
         <div
             tabIndex={0}
             onKeyDown={(e) => {
-                if (e.key === "Spacebar") {
+                if (e.key === "" || e.code === "Space") {
                     e.preventDefault();
                     setIsFlipped(!isFlipped);
                 }
@@ -186,7 +186,7 @@ export default function Flashcard() {
                         {/* Front */}
                         <div className="front min-h-[70vh]">
                             <Card className="pb-0 h-full flex flex-col justify-between">
-                                <CardContent className="p-8">
+                                <CardContent className="p-8 overflow-auto max-h-[calc(100vh-200px)]">
                                     <div className="mb-8 text-center">
                                         <h2 className="text-2xl font-medium text-gray-800 mb-6">{currentQuestion?.content}</h2>
 
@@ -198,8 +198,8 @@ export default function Flashcard() {
                                                     className="p-4 text-lg cursor-pointer transition-colors"
                                                 >
                                                     <div className="flex items-center gap-3">
-                                                        <span className="font-medium text-2xl text-gray-700">{String.fromCharCode(65 + index)}.</span>
-                                                        <span className="text-gray-800 text-xl">{option.content}</span>
+                                                        <span className="font-medium text-sm md:text-2xl text-gray-700">{String.fromCharCode(65 + index)}.</span>
+                                                        <span className="text-gray-800 text-xl break-words text-left">{option.content}</span>
                                                     </div>
                                                 </div>
                                             ))}
@@ -207,7 +207,7 @@ export default function Flashcard() {
                                     </div>
                                 </CardContent>
 
-                                <div className="bg-[#dbdfff] p-1 rounded-b-xl">
+                                <div className="bg-[#dbdfff] p-1 rounded-b-xl hidden sm:block">
                                     <div className="flex justify-center items-center gap-5">
                                         <div className="bg-amber-400 w-fit rounded-full p-1">
                                             <Keyboard size={20} className="text-amber-900 text-center ml-[1px]" />
