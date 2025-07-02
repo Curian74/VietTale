@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import aboutUs1 from '../../assets/images/aboutUs/aboutUs1.jpg';
 import aboutUs2 from '../../assets/images/aboutUs/aboutUs2.jpg';
 
@@ -5,12 +6,12 @@ const INTRODUCTION_TEXT = 'Trải qua lịch sử hàng ngàn năm dựng và gi
 
 const AboutUs = () => {
     return (
-        <section className="mb-10 w-10/12 ml-2 md:ml-20">
+        <section className="mb-10 w-10/12 ml-2 md:ml-20 mt-10 animate-[fadeInLeft_1s_ease-out]">
             <div>
                 <h1 className='uppercase text-3xl font-medium'>Về chúng tôi</h1>
             </div>
 
-            <div className="bg-[#193cb8] p-0.5 w-9 ml-1 my-2 mb-4"></div>
+            <div className="bg-[#f8b560] p-0.5 w-9 ml-1 my-2 mb-4"></div>
 
             {/* Content section */}
             <div className='flex flex-col gap-5 md:flex-row'>
@@ -21,12 +22,13 @@ const AboutUs = () => {
                     </div>
 
                     <div>
-                        <button
+                        <Link
+                            to={'/about-us'}
                             className='border-2 cursor-pointer
                              transition-colors duration-200
-                             hover:bg-[#1a237e] hover:text-white border-black py-2.5 px-4 rounded font-semibold'>
+                             hover:bg-[#f8b560] hover:text-white border-black py-2.5 px-4 rounded font-semibold'>
                             XEM THÊM
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

@@ -60,7 +60,7 @@ const Quiz = () => {
     const { question, options } = quizData[activeTab]
 
     return (
-        <section className="max-w-3xl mx-auto">
+        <section className="max-w-3xl mx-auto animate-[bottomFadeIn_1s_ease-out]">
             {/* Title */}
             <div className="text-center mb-4">
                 <h1 className="text-3xl font-medium uppercase mb-2">Trắc nghiệm</h1>
@@ -78,8 +78,8 @@ const Quiz = () => {
                         }}
                         className={`px-4 py-2 cursor-pointer rounded-full border transition 
                             ${activeTab === tab
-                                ? 'bg-blue-600 text-white border-blue-600'
-                                : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-50'
+                                ? 'bg-[#f8b560] text-[#f8f2f2] border-gray-200'
+                                : 'bg-[#fdf6ea] text-[#808080] border-gray-600 hover:bg-[#f8b560]'
                             }`}
                     >
                         {tab}
@@ -88,7 +88,7 @@ const Quiz = () => {
             </div>
 
             {/* Quiz Content */}
-            <div className="bg-[#f3f3f3] border-2 rounded-lg p-6">
+            <div className="bg-[#fefaf3] border-2 rounded-lg p-6 mb-10">
                 <h2 className="font-semibold mb-4 text-center">{question}</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
@@ -99,7 +99,7 @@ const Quiz = () => {
                             className={`border px-4 py-2 cursor-pointer rounded-full text-left transition
                                 ${selectedOption === option
                                     ? 'bg-orange-400 text-white border-orange-400'
-                                    : 'bg-white hover:bg-orange-100 text-gray-700 border-gray-300'
+                                    : 'bg-[#fefaf3] hover:bg-[#f8b560] text-gray-700 border-gray-300'
                                 }`}
                         >
                             {option}
@@ -111,7 +111,7 @@ const Quiz = () => {
 
                 <div className='text-center'>
                     <button
-                        className="bg-[#193cb8] cursor-pointer hover:bg-[#1a237e] transition-colors duration-200 text-white px-6 py-2 rounded-md disabled:opacity-70"
+                        className="bg-[#f8b560] cursor-pointer hover:bg-[#947650] transition-colors duration-200 text-white px-6 py-2 rounded-md disabled:opacity-70"
                     >
                         Gửi
                     </button>

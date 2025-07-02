@@ -8,7 +8,7 @@ import Quiz from '@/components/home/quiz/quiz'
 const Home = () => {
 
   return (
-    <main>
+    <main className='bg-[#fdf6ea] animate-[staticFadeIn_0.5s_ease-out]'>
       <Header />
 
       <div className="container mx-auto">

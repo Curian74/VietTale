@@ -26,19 +26,17 @@ const HistoryFigure = () => {
 
             <div className='flex flex-col md:flex-row gap-6 md:gap-10 ml-3 md:ml-8'>
                 {/* Left Side Content */}
-                <div className="flex flex-col w-70">
+                <div className="flex flex-col w-70 animate-[fadeInLeft_1s_ease-out]">
                     <HistoryFigureSearch onResults={handleSearchResults} />
-                    {figures.length > 0 && (
-                        <HistoricalFigureList
+                    <HistoricalFigureList
                             selectedFigure={selectedFigure}
                             figures={figures}
                             onSelectFigure={setSelectedFigure} />
-                    )}
 
                 </div>
 
                 {/* Right Side Content */}
-                <div className="w-3/4 h-[58vh]">
+                <div className="w-3/4 h-[58vh] animate-[fadeInRight_1s_ease-out]">
                     {selectedFigure && (
                         <HistoricalFigureDetail selectedFigure={selectedFigure} />
                     )}
