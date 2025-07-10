@@ -10,22 +10,23 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { Badge } from "@/components/ui/badge"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import userAvatar from '@/assets/images/user/defaultAvatar.jpg';
-// import { Switch } from "@/components/ui/switch"
 import {
     Bookmark,
     Share,
     CreditCard,
     RotateCcw,
     FileText,
-    // Star,
-    // ChevronLeft,
-    // ChevronRight,
-    // Play,
-    // SkipForward,
-    // Settings,
-    // Maximize,
 } from "lucide-react"
 import Header from "@/components/Header"
 import LearningSidebar from "@/components/learning/learningSidebar"
@@ -38,11 +39,26 @@ import { Facebook, Link2, Twitter } from "lucide-react";
 import toast from 'react-hot-toast';
 import { CircularProgress } from "@mui/material"
 
+interface LessonAttemptResult {
+    id: number;
+    userId: string;
+    lessonId: number;
+    startTime: string;
+    completionTime: string;
+    score: number;
+    totalQuestions: number;
+    correctAnswers: number;
+    isCompleted: boolean;
+}
+
 export default function LessonDetail() {
     const [lesson, setLesson] = useState<Lesson>();
     const [isLessonSaved, setIsLessonSaved] = useState<boolean>();
     const [isSaving, setIsSaving] = useState(false);
     const [isCheckingSave, setIsCheckingSave] = useState(true);
+    const [showExamDialog, setShowExamDialog] = useState(false);
+    const [lastAttempt, setLastAttempt] = useState<LessonAttemptResult | null>(null);
+    const [isLoadingAttempt, setIsLoadingAttempt] = useState(false);
     const { id } = useParams();
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -103,6 +119,28 @@ export default function LessonDetail() {
         }
     }
 
+    const getLastAttempt = async () => {
+        if (!user?.id || !lesson?.id) return;
+        
+        setIsLoadingAttempt(true);
+        try {
+            const response = await lessonService.getLastAttempt(lesson.id, user.id);
+            if (response) {
+                setLastAttempt(response);
+            }
+        } catch (err) {
+            console.error("Error fetching last attempt:", err);
+        } finally {
+            setIsLoadingAttempt(false);
+        }
+    };
+
+    useEffect(() => {
+        if (user?.id && lesson?.id) {
+            getLastAttempt();
+        }
+    }, [user, lesson]);
+
     useEffect(() => {
         if (lesson && user?.id) {
             updateLastActive();
@@ -132,6 +170,38 @@ export default function LessonDetail() {
             checkSavedLesson();
         }
     }, [lesson, user]);
+
+    const handleStartExam = () => {
+        setShowExamDialog(true);
+    };
+
+    const handleConfirmExam = async () => {
+        try {
+            const data = await lessonService.startLesson({
+                lessonId: parseInt(id!),
+                userId: user?.id || "",
+            });
+            setShowExamDialog(false);
+            navigate(`/learning/quiz/${id}/exam?attemptId=${data.attemptId}`);
+        } catch (err) {
+            console.log(err);
+            toast.error("Có lỗi xảy ra khi bắt đầu bài kiểm tra");
+        }
+    };
+
+    const handleStudyMode = (modeId: number) => {
+        switch (modeId) {
+            case 1: // Flashcard
+                createFlashcardAttemptAsync();
+                break;
+            case 2: // Study
+                navigate(`/learning/quiz/${id}/study`);
+                break;
+            case 3: // Exam
+                handleStartExam();
+                break;
+        }
+    };
 
     const shareUrl = `${window.location.origin}/learning/lesson/${lesson?.id}`;
 
@@ -231,18 +301,11 @@ export default function LessonDetail() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
                         {studyModes.map((mode) => {
                             const IconComponent = mode.icon;
-
-                            const handleClick = async () => {
-                                if (mode.id === 1) {
-                                    await createFlashcardAttemptAsync();
-                                }
-                            };
-
                             return (
                                 <Card
                                     key={mode.id}
                                     className="cursor-pointer hover:shadow-md transition-shadow"
-                                    onClick={handleClick}
+                                    onClick={() => handleStudyMode(mode.id)}
                                 >
                                     <CardContent className="p-6 flex items-center space-x-3">
                                         <div className="flex items-center gap-3">
@@ -257,6 +320,50 @@ export default function LessonDetail() {
                         })}
                     </div>
 
+                    {/* Last Attempt Results */}
+                    {isLoadingAttempt ? (
+                        <div className="flex justify-center my-4">
+                            <CircularProgress size={30} />
+                        </div>
+                    ) : lastAttempt && lastAttempt.isCompleted && (
+                        <Card className="mb-8">
+                            <CardContent className="p-6">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                                    Kết quả lần kiểm tra gần nhất
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600">Điểm số:</span>
+                                            <span className="font-semibold text-lg text-blue-600">
+                                                {lastAttempt.score}/100
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600">Câu trả lời đúng:</span>
+                                            <span className="font-medium">
+                                                {lastAttempt.correctAnswers}/{lastAttempt.totalQuestions}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600">Thời gian bắt đầu:</span>
+                                            <span className="font-medium">
+                                                {new Date(lastAttempt.startTime).toLocaleString('vi-VN')}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600">Thời gian hoàn thành:</span>
+                                            <span className="font-medium">
+                                                {new Date(lastAttempt.completionTime).toLocaleString('vi-VN')}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
 
                     {/* Hint Toggle */}
                     {/* <div className="flex items-center justify-between mb-8">
@@ -340,6 +447,24 @@ export default function LessonDetail() {
                     </div>
                 </div>
             </div>
+
+            {/* Exam Confirmation Dialog */}
+            <AlertDialog open={showExamDialog} onOpenChange={setShowExamDialog}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Bắt đầu kiểm tra?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Bạn sẽ bắt đầu bài kiểm tra. Kết quả sẽ được lưu lại sau khi hoàn thành.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Hủy</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleConfirmExam}>
+                            Bắt đầu
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     )
 }

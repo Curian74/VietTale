@@ -11,9 +11,9 @@ import Latest from '@/pages/public/learning/latest'
 import LessonDetail from '@/pages/public/learning/lessonDetail'
 import Flashcard from '@/pages/public/learning/flashcard'
 import Library from '@/pages/public/learning/library'
+import Quiz from '@/pages/public/learning/quiz'
 
 const Index = () => {
-    //
     return (
         <Routes>
             <Route path='/' element={<Home />} />
@@ -35,6 +35,7 @@ const Index = () => {
                     <Route path="lesson/:id" element={<LessonDetail />} />
                     <Route path="flashcard/:attemptId/:lessonId" element={<Flashcard />} />
                     <Route path="library" element={<Library />} />
+                    <Route path="quiz/:id/:mode" element={<Quiz />} />
                 </Route>
             </Route>
 
