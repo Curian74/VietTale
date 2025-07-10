@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import userAvatar from '@/assets/images/user/defaultAvatar.jpg';
 import { CircularProgress } from '@mui/material';
+import toast from 'react-hot-toast';
 
 const PopularFlashcard = () => {
     const [flashcards, setFlashcards] = useState<Lesson[]>([]);
@@ -15,14 +16,13 @@ const PopularFlashcard = () => {
         setIsLoading(true);
         try {
             const data = await lessonService.getPopularLessons();
-
+            console.log("Popular lessons response:", data);
             setFlashcards(data);
         }
-
         catch (err) {
-            console.log(err);
+            console.error("Error fetching popular flashcards:", err);
+            toast.error("Không thể tải các bộ thẻ phổ biến. Vui lòng thử lại sau.");
         }
-
         finally {
             setIsLoading(false);
         }
